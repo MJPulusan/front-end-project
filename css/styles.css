@@ -2,28 +2,6 @@
   display: block;
 }
 
-.visit {
-  font-weight: 400;
-  font-size: 15px;
-  margin-top: 0;
-  position: absolute;
-  padding-bottom: 3rem;
-}
-
-.today {
-  font-weight: 400;
-  font-size: 15px;
-  padding-bottom: 3rem;
-}
-
-h1 {
-  /* "National Park" Text background */
-  font-weight: 550;
-  font-size: 25px;
-  color: #f0f0f0;
-  letter-spacing: 2px;
-}
-
 label {
   color: #f0f0f0;
   font-family: Arial, Helvetica, sans-serif;
