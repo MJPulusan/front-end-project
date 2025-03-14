@@ -45,6 +45,7 @@ img {
   grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
   display: grid;
+  position: center;
 }
 
 .park-card {
@@ -62,15 +63,15 @@ img {
 }
 
 .park-image {
-  width: 200px;
-  height: 150px;
+  width: 150px;
+  height: 130px;
   object-fit: cover;
   border-radius: 20px;
 }
 
 .park-name {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: regular;
-  margin-top: 10px;
+  margin: 10px;
   color: #f0f0f0;
 }
