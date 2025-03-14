@@ -2,6 +2,13 @@
   display: block;
 }
 
+.bgText {
+  font-family: 'Julius Sans One', sans-serif;
+  font-style: normal;
+  color: #f1f37d;
+  letter-spacing: 2px;
+}
+
 label {
   color: #f0f0f0;
   font-family: Arial, Helvetica, sans-serif;
@@ -12,7 +19,7 @@ select {
   width: 60%;
   margin-top: 1.5rem;
   font-size: 16px;
-  background: rgba(117, 82, 82, 0.6);
+  background: rgba(77, 33, 33, 0.6);
   color: #f0f0f0;
   cursor: pointer;
 }
@@ -25,4 +32,45 @@ select {
 
 hr {
   width: 80%;
+}
+
+img {
+  width: 20%;
+  max-height: 20%;
+}
+
+/* images setting */
+
+.parks-container {
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+  display: grid;
+}
+
+.park-card {
+  /* position: relative; */
+  display: inline-block;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: rgba(151, 76, 76, 0.6);
+  text-align: center;
+  margin: 5px;
+}
+
+.park-image {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.park-name {
+  font-size: 16px;
+  font-weight: regular;
+  margin-top: 10px;
+  color: #f0f0f0;
 }
