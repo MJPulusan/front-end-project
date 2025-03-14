@@ -41,15 +41,15 @@ hr {
 .park-card {
   display: inline-block;
   justify-content: space-between;
-  align-items: center;
-  padding: 15px;
+  padding: 10px;
   border: 1px solid #ad3131;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background: rgba(151, 76, 76, 0.6);
   text-align: center;
-  margin: 2rem;
+  margin: 1.2rem;
   width: 200px;
-  height: 200px;
+  height: 220px;
+  align-items: center;
 }
 
 .park-image {

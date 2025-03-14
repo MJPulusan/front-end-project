@@ -2,26 +2,19 @@ const $apiKey = 'tjsESTV0ZCq5TAudXkKvHgf2h8rRIqIkhHziRF5i';
 const $stateSelect = document.querySelector('#states') as HTMLSelectElement;
 const $parksContainer = document.createElement('div');
 const $overlay = document.querySelector('.overlay') as HTMLElement;
-const $overlay2 = document.querySelector('#overlay2') as HTMLElement;
 document.body.appendChild($parksContainer);
-
-$parksContainer.id = 'parksContainer';
 
 if (!$apiKey) throw new Error('!$apiKey is missing');
 if (!$stateSelect) throw new Error('!$stateSelect dropdown does not exist.');
 if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
 if (!$overlay) throw new Error('!$overlay does not exist.');
-if (!$overlay2) throw new Error('!$overlay2 does not exist.');
 
 function getParkUrl(state: string): string {
   return `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
 }
 
 async function fetchParks(state: string): Promise<void> {
-  if (!state) {
-    console.error('State is required.');
-    return;
-  }
+  if (!state) throw new Error('State is required.');
 
   const url = getParkUrl(state);
   try {
@@ -30,7 +23,6 @@ async function fetchParks(state: string): Promise<void> {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const info = await response.json();
-    console.log(info);
     displayParks(info);
 
     swapView();
@@ -65,7 +57,6 @@ function displayParks(data: any): void {
 
 function swapView(): void {
   $overlay.style.display = 'none';
-  $overlay2.style.display = 'flex';
 }
 
 // Event listener for dropdown changes
