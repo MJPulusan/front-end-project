@@ -15,41 +15,10 @@ body {
   font-size: 1.5em;
 }
 
-.overlay {
-  background: rgba(0, 0, 0, 0.6);
-  text-align: center;
-  display: absolute;
-  justify-content: center;
-  align-items: center;
-  width: 70%;
-  padding-top: 2rem;
-  padding-bottom: 6rem;
-  border-radius: 40px;
-  position: absolute;
-  top: 30%;
-  left: 15%;
+hr {
+  width: 80%;
 }
 
-.visit {
-  font-weight: 400;
-  font-size: 15px;
-  position: absolute;
-  line-height: 0px;
-  margin-top: 0;
-}
-
-.today {
-  font-weight: 400;
-  font-size: 15px;
-  padding-bottom: 3rem;
-  line-height: 0px;
-}
-
-h1 {
-  /* "National Park" Text background */
-  font-weight: 550;
-  font-size: 25px;
-  color: #f0f0f0;
-  letter-spacing: 2px;
-  line-height: 0;
+.hidden {
+  display: none !important;
 }

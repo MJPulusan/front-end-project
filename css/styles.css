@@ -1,8 +1,52 @@
+/* start: here: for the background */
+
 .bgText {
   font-family: 'Julius Sans One', sans-serif;
   font-style: normal;
   color: #f1f37d;
   letter-spacing: 2px;
+}
+
+.visit {
+  font-weight: 400;
+  font-size: 15px;
+  position: absolute;
+  line-height: 0px;
+  margin-top: 0;
+}
+
+.today {
+  font-weight: 400;
+  font-size: 15px;
+  padding-bottom: 3rem;
+  line-height: 0px;
+}
+
+h1 {
+  /* "National Park" Text background */
+  font-weight: 550;
+  font-size: 25px;
+  color: #f0f0f0;
+  letter-spacing: 2px;
+  line-height: 0;
+}
+
+/* --ends--- */
+
+.overlay {
+  /* main select dropdown container */
+  background: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  display: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  padding-top: 2rem;
+  padding-bottom: 6rem;
+  border-radius: 40px;
+  position: absolute;
+  top: 30%;
+  left: 15%;
 }
 
 label {
@@ -26,41 +70,47 @@ select {
   padding-top: 1.5rem;
 }
 
-hr {
-  width: 80%;
-}
-
-/* Parks settings */
+/* ---- Parks settings ---- */
 .parks-container {
-  justify-content: space-around;
   display: flex;
-  position: center;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  padding: 20px;
 }
 
 .park-card {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
+  padding: 15px;
   border: 1px solid #ad3131;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background: rgba(151, 76, 76, 0.6);
+  background: rgba(44, 36, 36, 0.6);
   text-align: center;
-  margin: 1.2rem;
   width: 200px;
-  height: 220px;
+  max-height: 220px;
   align-items: center;
+  border-radius: 10%;
+  cursor: pointer;
+  transform: scale(1); /* to zoom the image */
+  transition: 0.5s; /* delay */
+  margin: 1.2rem;
+}
+
+.park-card:hover {
+  transform: scale(1.1);
 }
 
 .park-image {
   max-width: 150px;
-  max-height: 120px;
+  max-height: 130px;
   object-fit: cover;
   border-radius: 20px;
 }
 
 .park-name {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: regular;
   color: #f0f0f0;
 }

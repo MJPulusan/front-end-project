@@ -14,45 +14,50 @@
   </head>
   <body>
     <main>
-      <form>
-        <div class="container">
-          <div class="overlay">
-            <div class="row">
-              <h1>Your Destination</h1>
-              <hr />
-            </div>
-            <div class="row">
-              <label for="states"
-                >Select a State:<span>(within Western US)</span></label
-              >
-            </div>
-            <div>
-              <select id="states" name="western states">
-                <option value="defaultVal"></option>
-                <option value="ak">Alaska</option>
-                <option value="az">Arizona</option>
-                <option value="ca">California</option>
-                <option value="co">Colorado</option>
-                <option value="mt">Montana</option>
-                <option value="nv">Nevada</option>
-                <option value="nm">New Mexico</option>
-                <option value="or">Oregon</option>
-                <option value="ut">Utah</option>
-                <option value="wa">Washington</option>
-                <option value="wy">Wyoming</option>
-              </select>
-              <div class="overlay2"></div>
+      <div data-view="entry-form" class="bgText">
+        <form>
+          <div class="container">
+            <div class="overlay">
+              <div class="row">
+                <h1>Your Destination</h1>
+                <hr />
+              </div>
+              <div class="row">
+                <label for="states"
+                  >Select a State:<span>(within Western US)</span></label
+                >
+              </div>
+              <div>
+                <select id="states" name="western states">
+                  <option
+                    value="defaultVal"
+                    selected="true"
+                    disabled="disabled"></option>
+                  <option value="ak">Alaska</option>
+                  <option value="az">Arizona</option>
+                  <option value="ca">California</option>
+                  <option value="co">Colorado</option>
+                  <option value="mt">Montana</option>
+                  <option value="nv">Nevada</option>
+                  <option value="nm">New Mexico</option>
+                  <option value="or">Oregon</option>
+                  <option value="ut">Utah</option>
+                  <option value="wa">Washington</option>
+                  <option value="wy">Wyoming</option>
+                </select>
+                <div class="overlay2"></div>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-
-      <div data-view="entry-form" class="bgText">
+        </form>
         <footer class="footer-text">
           <h3 class="visit">VISIT</h3>
           <h1 class="np-text">NATIONAL PARKS</h1>
           <h3 class="today">TODAY.</h3>
         </footer>
+      </div>
+      <div data-view="parks">
+        <div class="parks-container"></div>
       </div>
     </main>
     <script src="js/data.js"></script>
