@@ -8,7 +8,6 @@ const $parksSection = document.querySelector(
 
 if (!$apiKey) throw new Error('!$apiKey is missing');
 if (!$stateSelect) throw new Error('!$stateSelect dropdown does not exist.');
-
 if (!$overlay) throw new Error('!$overlay does not exist.');
 
 function getParkUrl(state: string): string {
@@ -26,7 +25,6 @@ async function fetchParks(state: string): Promise<void> {
     }
     const info = await response.json();
     displayParks(info);
-    console.log(info);
 
     swapView('entry-form');
   } catch (error) {
@@ -73,7 +71,6 @@ function swapView(viewName: 'entries' | 'entry-form'): void {
   $overlay.classList.toggle('hidden', viewName !== 'entries');
   $parksContainer.classList.toggle('hidden', viewName !== 'entry-form');
 }
-
 // Event listener for dropdown changes
 $stateSelect.addEventListener('change', () => {
   fetchParks($stateSelect.value);

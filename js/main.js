@@ -20,7 +20,6 @@ async function fetchParks(state) {
     }
     const info = await response.json();
     displayParks(info);
-    console.log(info);
     swapView('entry-form');
   } catch (error) {
     console.error('Error fetching parks:', error);
