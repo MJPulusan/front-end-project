@@ -1,20 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AJAX Project</title>
-  <link rel="icon" href="images/favicon.ico">
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-  <header>
-  </header>
-  <main>
-  </main>
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Wester US National Parks Project</title>
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Julius+Sans+One&family=Press+Start+2P&family=Sedan+SC&display=swap"
+      rel="stylesheet" />
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div data-view="entry-form" class="natParkText">
+        <form>
+          <div class="container">
+            <div class="overlay">
+              <div class="row">
+                <h1>Your Destination</h1>
+                <hr />
+              </div>
+              <div class="row">
+                <label for="states"
+                  >Select a State:<span>(within Western US)</span></label
+                >
+              </div>
+              <div>
+                <select id="states" name="western states">
+                  <option
+                    value="defaultVal"
+                    selected="true"
+                    disabled="disabled"></option>
+                  <option value="ak">Alaska</option>
+                  <option value="az">Arizona</option>
+                  <option value="ca">California</option>
+                  <option value="co">Colorado</option>
+                  <option value="mt">Montana</option>
+                  <option value="nv">Nevada</option>
+                  <option value="nm">New Mexico</option>
+                  <option value="or">Oregon</option>
+                  <option value="ut">Utah</option>
+                  <option value="wa">Washington</option>
+                  <option value="wy">Wyoming</option>
+                </select>
+                <div class="overlay2"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <footer class="footer-text">
+          <h3 class="visit">VISIT</h3>
+          <h1 class="np-text">NATIONAL PARKS</h1>
+          <h3 class="today">TODAY.</h3>
+        </footer>
+      </div>
+      <div data-view="parks">
+        <div class="parks-container"></div>
+      </div>
+    </main>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>

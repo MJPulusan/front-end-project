@@ -1,0 +1,145 @@
+/* start: here: for the background */
+body {
+  margin: 0;
+  padding: 0;
+  background: url('/images/lower-antelope-canyon.jpg') center center/cover;
+  height: 100vh;
+  display: flex;
+}
+
+.footer-text {
+  position: absolute;
+  bottom: 20px;
+  left: 60px;
+  letter-spacing: 2px;
+  line-height: 1.3;
+  font-size: 1.5em;
+}
+
+.natParkText {
+  font-family: 'Julius Sans One', sans-serif;
+  font-style: normal;
+  color: #f1f37d;
+  letter-spacing: 2px;
+}
+
+.visit {
+  font-weight: 400;
+  font-size: 15px;
+  position: absolute;
+  line-height: 0px;
+  margin-top: 0;
+}
+
+.today {
+  font-weight: 400;
+  font-size: 15px;
+  padding-bottom: 3rem;
+  line-height: 0px;
+}
+
+h1 {
+  /* "National Park" Text background */
+  font-weight: 550;
+  font-size: 25px;
+  color: #f0f0f0;
+  letter-spacing: 2px;
+  line-height: 0;
+}
+
+/* --ends--- */
+
+.overlay {
+  /* main select dropdown container */
+  background: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  display: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  padding-top: 2rem;
+  padding-bottom: 6rem;
+  border-radius: 40px;
+  position: absolute;
+  top: 30%;
+  left: 15%;
+}
+
+label {
+  /* select state text */
+  color: #f0f0f0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+select {
+  /* for my dropdown menu */
+  width: 60%;
+  margin-top: 1.5rem;
+  font-size: 16px;
+  background: rgba(77, 33, 33, 0.6);
+  color: #f0f0f0;
+  cursor: pointer;
+}
+
+.row {
+  font-family: 'Sedan SC', sans-serif; /* "Your Destination" Text */
+  letter-spacing: 1px;
+  padding-top: 1.5rem;
+}
+
+/* ---- Parks settings ---- */
+.parks-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  padding: 20px;
+  animation: grow 1.3s;
+}
+
+/* to pop my Nat Parks */
+@keyframes grow {
+  0% {
+    transform: scale(0.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.park-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  border: 1px solid #ad3131;
+  background: rgba(44, 36, 36, 0.6);
+  text-align: center;
+  width: 200px;
+  max-height: 220px;
+  align-items: center;
+  border-radius: 10%;
+  cursor: pointer;
+  transition: 0.5s; /* delay */
+  margin: 1.2rem;
+}
+
+.park-card:hover {
+  transform: scale(1.1);
+}
+
+.park-image {
+  max-width: 150px;
+  max-height: 130px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.park-name {
+  font-size: 15px;
+  font-weight: regular;
+  color: #f0f0f0;
+}
