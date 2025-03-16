@@ -139,7 +139,9 @@ select {
 }
 
 .park-name {
+  font-family: 'Sedan SC', sans-serif;
   font-size: 15px;
-  font-weight: regular;
+  font-weight: lighter;
+  letter-spacing: 0.5px;
   color: #f0f0f0;
 }
