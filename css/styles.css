@@ -83,8 +83,8 @@ select {
 }
 
 .row {
-  font-family: 'Sedan SC', sans-serif; /* "Your Destination" Text */
-  letter-spacing: 1px;
+  font-family: 'Sedan SC', sans-serif;
+  "YourDestination"letter-spacing: 1px;
   padding-top: 1.5rem;
 }
 
@@ -97,6 +97,7 @@ select {
   width: 100%;
   padding: 20px;
   animation: grow 1.3s;
+  z-index: 1000; /* to display in front */
 }
 
 /* to pop my Nat Parks */
@@ -125,6 +126,7 @@ select {
   cursor: pointer;
   transition: 0.5s; /* delay */
   margin: 1.2rem;
+  z-index: 1000;
 }
 
 .park-card:hover {
@@ -139,7 +141,83 @@ select {
 }
 
 .park-name {
-  font-size: 15px;
-  font-weight: regular;
+  font-family: 'Sedan SC', sans-serif;
+  font-size: 13px;
+  font-weight: lighter;
+  letter-spacing: 0.5px;
   color: #f0f0f0;
+}
+
+/* 3rd page */
+.park-image-large {
+  width: 40%;
+  height: auto;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  display: flex;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.details-container {
+  background-color: rgba(36, 21, 21, 0.8);
+  margin: 10%;
+  padding-bottom: 5%;
+  border-radius: 40px;
+  align-items: center;
+  z-index: 1000;
+}
+
+.details-container h2 {
+  font-family: 'Sedan SC', sans-serif;
+  font-weight: lighter;
+  color: #f0f0f0;
+  text-align: center;
+  margin: auto;
+  padding-top: 5%;
+}
+
+p {
+  font-family: 'Julius Sans One', sans-serif;
+  color: #f0f0f0;
+  text-align: center;
+  font-style: italic;
+  width: 65%;
+  margin: auto;
+  padding-top: 2rem;
+}
+
+.home-button {
+  background-color: rgba(44, 36, 36, 0.6);
+  color: #f0f0f0;
+  font-family: 'Julius Sans One', sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 6px 16px;
+  position: absolute;
+  align-items: center;
+}
+
+.home-button:hover {
+  transform: scale(1.1);
+}
+
+.back-button {
+  background-color: rgba(44, 36, 36, 0.6);
+  color: #f0f0f0;
+  font-family: 'Julius Sans One', sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 4px 16px;
+  float: right;
+  margin-right: 10%;
+}
+
+.back-button:hover {
+  transform: scale(1.1);
 }

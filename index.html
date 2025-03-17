@@ -17,7 +17,7 @@
     <main>
       <div data-view="entry-form" class="natParkText">
         <form>
-          <div class="container">
+          <div id="container">
             <div class="overlay">
               <div class="row">
                 <h1>Your Destination</h1>
@@ -46,19 +46,30 @@
                   <option value="wa">Washington</option>
                   <option value="wy">Wyoming</option>
                 </select>
-                <div class="overlay2"></div>
               </div>
             </div>
           </div>
         </form>
+
+        <div id="overlay2">
+          <div data-view="view-info" class="hidden" id="entryInfo"></div>
+          <div class="details-container"></div>
+
+          <div class="details-section">
+            <button class="back-button hidden">Back</button>
+          </div>
+        </div>
         <footer class="footer-text">
           <h3 class="visit">VISIT</h3>
           <h1 class="np-text">NATIONAL PARKS</h1>
           <h3 class="today">TODAY.</h3>
         </footer>
       </div>
+
       <div data-view="parks">
         <div class="parks-container"></div>
+
+        <button class="home-button hidden">Home</button>
       </div>
     </main>
     <script src="js/data.js"></script>

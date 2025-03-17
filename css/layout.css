@@ -3,5 +3,25 @@ hr {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.overlay2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.overlay2 hr {
+  width: 72%;
+  margin-top: 10%;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay2 h1 {
+  padding-top: 5px;
+  margin-left: 70px;
+  text-align: left;
 }
