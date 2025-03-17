@@ -126,6 +126,7 @@ select {
   cursor: pointer;
   transition: 0.5s; /* delay */
   margin: 1.2rem;
+  z-index: 1000;
 }
 
 .park-card:hover {

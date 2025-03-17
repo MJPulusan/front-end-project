@@ -7,17 +7,22 @@ const $parksSection = document.querySelector(
 ) as HTMLElement;
 const $detailsContainer = document.querySelector('.details-container');
 const $detailsSection = document.querySelector('.details-section');
-const $backButton = document.querySelector('.back-button') as HTMLElement;
+const $backButton = document.querySelector('#back-button') as HTMLElement;
+const $homeButton = document.querySelector('.home-button') as HTMLElement;
 
+// Error Checks
 if (!$apiKey) throw new Error('!$apiKey is missing');
 if (!$stateSelect) throw new Error('!$stateSelect dropdown does not exist.');
 if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
+if (!$backButton) throw new Error('!$backButton does not exist.');
+if (!$homeButton) throw new Error('!$homeButton does not exist.');
 
-function getParkUrl(state: string): any {
+function getParkUrl(state: string): string {
   return `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
 }
 
-async function fetchParks(state: string): Promise<any> {
+// to fetch Parks Data from API
+async function fetchParks(state: string): Promise<void> {
   if (!state) throw new Error('State is required.');
 
   const url = getParkUrl(state);
@@ -28,17 +33,17 @@ async function fetchParks(state: string): Promise<any> {
     }
     const data = await response.json();
     displayParks(data.data);
-
     swapView('parks');
   } catch (error) {
     console.error('Error fetching parks:', error);
   }
 }
 
-function displayParks(parks: any): void {
+// **STEP 5: Display Parks Data**
+function displayParks(parks: any[]): void {
   if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
 
-  $parksContainer.innerHTML = ''; // Clear previous results
+  $parksContainer.innerHTML = ''; // Clear 'previous results'
 
   parks.forEach((park: any) => {
     if (park.images.length > 0) {
@@ -56,7 +61,7 @@ function displayParks(parks: any): void {
       name.textContent = park.fullName;
       name.classList.add('park-name');
 
-      // Click event to show full details
+      // Click event --> full details
       parkCard.addEventListener('click', () => showParkDetails(park));
 
       parkCard.appendChild(image);
@@ -66,25 +71,23 @@ function displayParks(parks: any): void {
   });
 }
 
-// Function to show full park details
+// To show Full Park Details
 function showParkDetails(park: any): void {
   if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
 
-  $detailsContainer.innerHTML = ''; // Clear previous details
+  $detailsContainer.innerHTML = ''; // Clear 'previous details'
 
   const parkName = document.createElement('h2');
   parkName.textContent = park.fullName;
 
   const parkImage = document.createElement('img');
   parkImage.src =
-    park.images.length > 0 ? park.images[0].url : 'images/no-image.jpg';
+    park.images.length > 0 ? park.images[1].url : 'images/no-image.jpg';
   parkImage.alt = park.fullName;
   parkImage.classList.add('park-image-large');
 
   const parkDescription = document.createElement('p');
   parkDescription.textContent = park.description;
-
-  if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
 
   $detailsContainer.appendChild(parkName);
   $detailsContainer.appendChild(parkImage);
@@ -93,7 +96,7 @@ function showParkDetails(park: any): void {
   swapView('details');
 }
 
-// Hide or show sections
+// Viewswapping between views
 function swapView(viewName: string): void {
   if (!$overlay) throw new Error('!$overlay does not exist.');
   if (!$parksSection) throw new Error('!$parksSection does not exist.');
@@ -104,18 +107,39 @@ function swapView(viewName: string): void {
   $parksContainer.classList.toggle('hidden', viewName !== 'parks');
   $parksSection.classList.toggle('hidden', viewName !== 'parks');
   $detailsSection.classList.toggle('hidden', viewName !== 'details');
+
+  if (viewName === 'details') {
+    $backButton.classList.remove('hidden'); // Show back button --> 'details view'
+    $homeButton.classList.add('hidden'); // Hide home button --> 'details view'
+  } else if (viewName === 'parks') {
+    $backButton.classList.add('hidden'); // Hide back button --> 'parks view'
+    $homeButton.classList.remove('hidden'); // Show home button --> 'parks view'
+  } else {
+    $backButton.classList.add('hidden'); // Hide back button --> 'other views'
+    $homeButton.classList.add('hidden'); // Hide home button --> 'other views'
+  }
 }
 
-// Event listener for dropdown changes
+// Event Listeners
+
 $stateSelect.addEventListener('change', () => {
   fetchParks($stateSelect.value);
 });
 
-if (!$backButton) throw new Error('!$backButton does not exist.');
-// Event listener for back button
+// Back button event
 $backButton.addEventListener('click', () => {
   if ($detailsContainer) {
     $detailsContainer.innerHTML = '';
   }
   swapView('parks');
+});
+
+// Home button event
+$homeButton.addEventListener('click', () => {
+  const form = document.querySelector('form') as HTMLFormElement;
+
+  if (form) {
+    form.reset(); // Resets dropdown --> default option
+  }
+  swapView('entry-form');
 });
