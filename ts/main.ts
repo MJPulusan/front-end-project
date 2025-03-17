@@ -33,6 +33,9 @@ async function fetchParks(state: string): Promise<void> {
     }
     const data = await response.json();
     displayParks(data.data);
+
+    console.log(data.data);
+
     swapView('parks');
   } catch (error) {
     console.error('Error fetching parks:', error);
@@ -81,8 +84,12 @@ function showParkDetails(park: any): void {
   parkName.textContent = park.fullName;
 
   const parkImage = document.createElement('img');
-  parkImage.src =
-    park.images.length > 0 ? park.images[1].url : 'images/no-image.jpg';
+  if (park.images.length > 0) {
+    parkImage.src = park.images[1].url;
+  } else {
+    parkImage.src = 'images/no-image.jpg';
+  }
+
   parkImage.alt = park.fullName;
   parkImage.classList.add('park-image-large');
 
