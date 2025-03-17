@@ -4,17 +4,20 @@ const $parksContainer = document.querySelector('.parks-container');
 const $overlay = document.querySelector('.overlay') as HTMLElement;
 const $parksSection = document.querySelector(
   '[data-view="parks"]',
-) as HTMLElement; // Added reference to the parks section
+) as HTMLElement;
+const $detailsContainer = document.querySelector('.details-container');
+const $detailsSection = document.querySelector('.details-section');
+const $backButton = document.querySelector('.back-button') as HTMLElement;
 
 if (!$apiKey) throw new Error('!$apiKey is missing');
 if (!$stateSelect) throw new Error('!$stateSelect dropdown does not exist.');
-if (!$overlay) throw new Error('!$overlay does not exist.');
+if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
 
-function getParkUrl(state: string): string {
+function getParkUrl(state: string): any {
   return `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
 }
 
-async function fetchParks(state: string): Promise<void> {
+async function fetchParks(state: string): Promise<any> {
   if (!state) throw new Error('State is required.');
 
   const url = getParkUrl(state);
@@ -23,55 +26,96 @@ async function fetchParks(state: string): Promise<void> {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    const info = await response.json();
-    displayParks(info);
+    const data = await response.json();
+    displayParks(data.data);
 
-    swapView('entry-form');
+    swapView('parks');
   } catch (error) {
     console.error('Error fetching parks:', error);
   }
 }
 
-function displayParks(data: any): void {
+function displayParks(parks: any): void {
   if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
 
   $parksContainer.innerHTML = ''; // Clear previous results
 
-  data.data.forEach((park: any) => {
+  parks.forEach((park: any) => {
     if (park.images.length > 0) {
       const parkCard = document.createElement('div');
       parkCard.classList.add('park-card');
 
-      const imageContainer = document.createElement('div');
-      imageContainer.style.height = '150px';
-
+      // Image
       const image = document.createElement('img');
       image.src = park.images[0].url;
       image.alt = park.fullName;
       image.classList.add('park-image');
 
-      imageContainer.appendChild(image);
-
+      // Park Name
       const name = document.createElement('h4');
       name.textContent = park.fullName;
       name.classList.add('park-name');
 
-      parkCard.appendChild(imageContainer);
+      // Click event to show full details
+      parkCard.addEventListener('click', () => showParkDetails(park));
+
+      parkCard.appendChild(image);
       parkCard.appendChild(name);
       $parksContainer.appendChild(parkCard);
     }
   });
-  $parksSection.appendChild($parksContainer);
 }
 
-// hides the Your destination container
-function swapView(viewName: 'entries' | 'entry-form'): void {
+// Function to show full park details
+function showParkDetails(park: any): void {
+  if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
+
+  $detailsContainer.innerHTML = ''; // Clear previous details
+
+  const parkName = document.createElement('h2');
+  parkName.textContent = park.fullName;
+
+  const parkImage = document.createElement('img');
+  parkImage.src =
+    park.images.length > 0 ? park.images[0].url : 'images/no-image.jpg';
+  parkImage.alt = park.fullName;
+  parkImage.classList.add('park-image-large');
+
+  const parkDescription = document.createElement('p');
+  parkDescription.textContent = park.description;
+
+  if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
+
+  $detailsContainer.appendChild(parkName);
+  $detailsContainer.appendChild(parkImage);
+  $detailsContainer.appendChild(parkDescription);
+
+  swapView('details');
+}
+
+// Hide or show sections
+function swapView(viewName: string): void {
+  if (!$overlay) throw new Error('!$overlay does not exist.');
+  if (!$parksSection) throw new Error('!$parksSection does not exist.');
+  if (!$detailsSection) throw new Error('!$detailsSection does not exist.');
   if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
 
-  $overlay.classList.toggle('hidden', viewName !== 'entries');
-  $parksContainer.classList.toggle('hidden', viewName !== 'entry-form');
+  $overlay.classList.toggle('hidden', viewName !== 'entry-form');
+  $parksContainer.classList.toggle('hidden', viewName !== 'parks');
+  $parksSection.classList.toggle('hidden', viewName !== 'parks');
+  $detailsSection.classList.toggle('hidden', viewName !== 'details');
 }
+
 // Event listener for dropdown changes
 $stateSelect.addEventListener('change', () => {
   fetchParks($stateSelect.value);
+});
+
+if (!$backButton) throw new Error('!$backButton does not exist.');
+// Event listener for back button
+$backButton.addEventListener('click', () => {
+  if ($detailsContainer) {
+    $detailsContainer.innerHTML = '';
+  }
+  swapView('parks');
 });

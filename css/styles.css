@@ -97,6 +97,7 @@ select {
   width: 100%;
   padding: 20px;
   animation: grow 1.3s;
+  z-index: 1000; /* to display in front */
 }
 
 /* to pop my Nat Parks */
@@ -140,8 +141,14 @@ select {
 
 .park-name {
   font-family: 'Sedan SC', sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: lighter;
   letter-spacing: 0.5px;
   color: #f0f0f0;
+}
+
+/* 3rd page */
+.park-image-large {
+  width: 30%;
+  height: 30%;
 }
