@@ -201,3 +201,16 @@ p {
 #back-button:hover {
   transform: scale(1.1);
 }
+
+#favorites-button {
+  background-color: rgba(44, 36, 36, 0.6);
+  color: #f0f0f0;
+  font-family: 'Julius Sans One', sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+#favorites-button:hover {
+  transform: scale(1.1);
+}

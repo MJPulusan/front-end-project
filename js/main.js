@@ -7,11 +7,13 @@ const $parksSection = document.querySelector('[data-view="parks"]');
 const $detailsContainer = document.querySelector('.details-container');
 const $detailsSection = document.querySelector('.details-section');
 const $backButton = document.querySelector('#back-button');
+const $favoritesButton = document.querySelector('#favorites-button');
 const $homeButton = document.querySelector('.home-button');
 // Error Checks
 if (!$apiKey) throw new Error('!$apiKey is missing');
 if (!$stateSelect) throw new Error('!$stateSelect dropdown does not exist.');
 if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
+if (!$favoritesButton) throw new Error('!$favoritesButton does not exist.');
 if (!$backButton) throw new Error('!$backButton does not exist.');
 if (!$homeButton) throw new Error('!$homeButton does not exist.');
 function getParkUrl(state) {
@@ -91,12 +93,15 @@ function swapView(viewName) {
   $parksSection.classList.toggle('hidden', viewName !== 'parks');
   $detailsSection.classList.toggle('hidden', viewName !== 'details');
   if (viewName === 'details') {
+    $favoritesButton.classList.remove('hidden'); // Show favorites button --> 'details view'
     $backButton.classList.remove('hidden'); // Show back button --> 'details view'
     $homeButton.classList.add('hidden'); // Hide home button --> 'details view'
   } else if (viewName === 'parks') {
+    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'parks view'
     $backButton.classList.add('hidden'); // Hide back button --> 'parks view'
     $homeButton.classList.remove('hidden'); // Show home button --> 'parks view'
   } else {
+    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'other views'
     $backButton.classList.add('hidden'); // Hide back button --> 'other views'
     $homeButton.classList.add('hidden'); // Hide home button --> 'other views'
   }
