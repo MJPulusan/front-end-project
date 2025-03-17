@@ -17,7 +17,6 @@
     <main>
       <div data-view="entry-form" class="natParkText">
         <form>
-          <!-- <div id="container" class="hidden"> -->
           <div id="container">
             <div class="overlay">
               <div class="row">
@@ -52,14 +51,12 @@
           </div>
         </form>
 
-        <div class="overlay2">
+        <div id="overlay2">
           <div data-view="view-info" class="hidden" id="entryInfo"></div>
           <div class="details-container"></div>
-          <!-- <div class="row"><h1>National Park</h1></div> -->
+
           <div class="details-section">
-            <hr />
-            <button id="favorites-button" class="hidden">+ Favorites</button>
-            <button id="back-button" class="hidden">Back</button>
+            <button class="back-button hidden">Back</button>
           </div>
         </div>
         <footer class="footer-text">
@@ -68,6 +65,7 @@
           <h3 class="today">TODAY.</h3>
         </footer>
       </div>
+
       <div data-view="parks">
         <div class="parks-container"></div>
 

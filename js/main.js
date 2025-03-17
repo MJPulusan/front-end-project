@@ -6,16 +6,16 @@ const $overlay = document.querySelector('.overlay');
 const $parksSection = document.querySelector('[data-view="parks"]');
 const $detailsContainer = document.querySelector('.details-container');
 const $detailsSection = document.querySelector('.details-section');
-const $backButton = document.querySelector('#back-button');
-const $favoritesButton = document.querySelector('#favorites-button');
+const $backButton = document.querySelector('.back-button');
 const $homeButton = document.querySelector('.home-button');
+const $overlay2 = document.querySelector('#overlay2');
 // Error Checks
 if (!$apiKey) throw new Error('!$apiKey is missing');
 if (!$stateSelect) throw new Error('!$stateSelect dropdown does not exist.');
 if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
-if (!$favoritesButton) throw new Error('!$favoritesButton does not exist.');
 if (!$backButton) throw new Error('!$backButton does not exist.');
 if (!$homeButton) throw new Error('!$homeButton does not exist.');
+if (!$overlay2) throw new Error('!$overlay2 does not exist.');
 function getParkUrl(state) {
   return `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
 }
@@ -30,13 +30,12 @@ async function fetchParks(state) {
     }
     const data = await response.json();
     displayParks(data.data);
-    console.log(data.data);
     swapView('parks');
   } catch (error) {
     console.error('Error fetching parks:', error);
   }
 }
-// **STEP 5: Display Parks Data**
+// Display Parks Data
 function displayParks(parks) {
   if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
   $parksContainer.innerHTML = ''; // Clear 'previous results'
@@ -88,22 +87,22 @@ function swapView(viewName) {
   if (!$parksSection) throw new Error('!$parksSection does not exist.');
   if (!$detailsSection) throw new Error('!$detailsSection does not exist.');
   if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
+  if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
   $overlay.classList.toggle('hidden', viewName !== 'entry-form');
   $parksContainer.classList.toggle('hidden', viewName !== 'parks');
   $parksSection.classList.toggle('hidden', viewName !== 'parks');
   $detailsSection.classList.toggle('hidden', viewName !== 'details');
+  $detailsContainer.classList.toggle('hidden', viewName !== 'details');
   if (viewName === 'details') {
-    $favoritesButton.classList.remove('hidden'); // Show favorites button --> 'details view'
     $backButton.classList.remove('hidden'); // Show back button --> 'details view'
     $homeButton.classList.add('hidden'); // Hide home button --> 'details view'
+    $detailsContainer.classList.remove('hidden');
   } else if (viewName === 'parks') {
-    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'parks view'
     $backButton.classList.add('hidden'); // Hide back button --> 'parks view'
     $homeButton.classList.remove('hidden'); // Show home button --> 'parks view'
   } else {
-    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'other views'
     $backButton.classList.add('hidden'); // Hide back button --> 'other views'
-    $homeButton.classList.add('hidden'); // Hide home button --> 'other views'
+    $homeButton.classList.add('hidden'); // Hide back button --> 'other views'
   }
 }
 // Event Listeners
