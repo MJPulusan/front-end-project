@@ -153,3 +153,18 @@ select {
   width: 30%;
   height: 30%;
 }
+
+.home-button {
+  background-color: rgba(44, 36, 36, 0.6);
+  color: #f0f0f0;
+  font-family: 'Julius Sans One', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#back-button {
+  background-color: rgba(44, 36, 36, 0.6);
+  color: #f0f0f0;
+  font-family: 'Julius Sans One', sans-serif;
+  font-size: 20px;
+}
