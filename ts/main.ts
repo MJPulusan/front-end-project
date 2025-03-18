@@ -10,6 +10,9 @@ const $detailsSection = document.querySelector('.details-section');
 const $backButton = document.querySelector('.back-button') as HTMLElement;
 const $homeButton = document.querySelector('.home-button') as HTMLElement;
 const $overlay2 = document.querySelector('#overlay2') as HTMLElement;
+const $favoritesButton = document.querySelector(
+  '.favorites-button',
+) as HTMLElement;
 
 // Error Checks
 if (!$apiKey) throw new Error('!$apiKey is missing');
@@ -18,6 +21,7 @@ if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
 if (!$backButton) throw new Error('!$backButton does not exist.');
 if (!$homeButton) throw new Error('!$homeButton does not exist.');
 if (!$overlay2) throw new Error('!$overlay2 does not exist.');
+if (!$favoritesButton) throw new Error('!$favoritesButton does not exist.');
 
 function getParkUrl(state: string): string {
   return `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
@@ -74,6 +78,28 @@ function displayParks(parks: any[]): void {
   });
 }
 
+const favorites = new Set(
+  JSON.parse(localStorage.getItem('favorites') || '[]'),
+);
+
+function toggleFavorite(park: any): void {
+  if (favorites.has(park.fullName)) {
+    favorites.delete(park.fullName);
+  } else {
+    favorites.add(park.fullName);
+  }
+  localStorage.setItem('favorites', JSON.stringify([...favorites]));
+  updateFavoritesButton(park.fullName);
+}
+
+function updateFavoritesButton(parkName: any): void {
+  if (favorites.has(parkName)) {
+    $favoritesButton.textContent = 'Remove from Favorites';
+  } else {
+    $favoritesButton.textContent = 'Add to Favorites';
+  }
+}
+
 // To show Full Park Details
 function showParkDetails(park: any): void {
   if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
@@ -101,6 +127,16 @@ function showParkDetails(park: any): void {
   $detailsContainer.appendChild(parkDescription);
 
   swapView('details');
+  updateFavoritesButton(park.fullName);
+
+  // Set up event listener for favorites button
+  $favoritesButton.onclick = (): void => toggleFavorite(park);
+}
+
+if ($favoritesButton) {
+  $favoritesButton.addEventListener('click', () => {
+    console.log('Favorites button clicked!');
+  });
 }
 
 // Viewswapping between views
@@ -121,12 +157,15 @@ function swapView(viewName: string): void {
     $backButton.classList.remove('hidden'); // Show back button --> 'details view'
     $homeButton.classList.add('hidden'); // Hide home button --> 'details view'
     $detailsContainer.classList.remove('hidden');
+    $favoritesButton.classList.remove('hidden'); // Show favorites button --> 'details view'
   } else if (viewName === 'parks') {
     $backButton.classList.add('hidden'); // Hide back button --> 'parks view'
     $homeButton.classList.remove('hidden'); // Show home button --> 'parks view'
+    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'parks view'
   } else {
     $backButton.classList.add('hidden'); // Hide back button --> 'other views'
     $homeButton.classList.add('hidden'); // Hide back button --> 'other views'
+    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'other views'
   }
 }
 

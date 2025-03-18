@@ -176,6 +176,7 @@ select {
   color: #f0f0f0;
   text-align: center;
   margin: auto;
+  width: 70%;
   padding-top: 5%;
 }
 
@@ -184,7 +185,7 @@ p {
   color: #f0f0f0;
   text-align: center;
   font-style: italic;
-  width: 65%;
+  width: 85%;
   margin: auto;
   padding-top: 2rem;
 }
@@ -215,9 +216,24 @@ p {
   transition: 0.5s;
   padding: 4px 16px;
   float: right;
-  margin-right: 10%;
 }
 
 .back-button:hover {
+  transform: scale(1.1);
+}
+
+.favorites-button {
+  background-color: rgba(44, 36, 36, 0.8);
+  color: #f0f0f0;
+  font-family: 'Julius Sans One', sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 4px 16px;
+  float: right;
+  margin-right: 11%;
+}
+
+.favorites-button:hover {
   transform: scale(1.1);
 }
