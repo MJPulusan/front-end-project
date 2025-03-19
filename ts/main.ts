@@ -1,6 +1,5 @@
-const $apiKey = 'tjsESTV0ZCq5TAudXkKvHgf2h8rRIqIkhHziRF5i';
-
 // DOM Elements
+const $apiKey = 'tjsESTV0ZCq5TAudXkKvHgf2h8rRIqIkhHziRF5i';
 const $stateSelect = document.querySelector('#states') as HTMLSelectElement;
 const $parksContainer = document.querySelector(
   '.parks-container',
@@ -22,20 +21,15 @@ const $favoritesButton = document.querySelector(
 ) as HTMLElement;
 
 // ✅ Error handling for missing DOM elements
-if (
-  !$parksContainer ||
-  !$detailsContainer ||
-  !$overlay ||
-  !$parksSection ||
-  !$detailsSection ||
-  !$stateSelect ||
-  !$backButton ||
-  !$homeButton ||
-  !$favoritesButton
-) {
-  console.error('Some essential DOM elements are missing.');
-  throw new Error('Missing DOM elements. Check your HTML structure.');
-}
+if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
+if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
+if (!$overlay) throw new Error('!$overlay does not exist.');
+if (!$parksSection) throw new Error('!$parksSection does not exist.');
+if (!$detailsSection) throw new Error('!$detailsSection does not exist.');
+if (!$stateSelect) throw new Error('!$stateSelect does not exist.');
+if (!$backButton) throw new Error('!$backButton does not exist.');
+if (!$homeButton) throw new Error('!$homeButton does not exist.');
+if (!$favoritesButton) throw new Error('!$favoritesButton does not exist.');
 
 // ✅ Fetch parks by state
 async function fetchParks(state: string): Promise<void> {
@@ -144,13 +138,7 @@ function toggleFavorite(park: any): void {
 // ✅ Display all favorites
 function displayAllFavorites(): void {
   $parksContainer.innerHTML = ''; // Clear previous results
-
   const favorites = getFavorites();
-  if (favorites.length === 0) {
-    $parksContainer.innerHTML = '<p>No favorite parks added yet.</p>';
-    return;
-  }
-
   favorites.forEach((park) => createParkCard(park));
 }
 
