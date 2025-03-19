@@ -4,26 +4,17 @@ const $apiKey = 'tjsESTV0ZCq5TAudXkKvHgf2h8rRIqIkhHziRF5i';
 const $stateSelect = document.querySelector('#states');
 const $parksContainer = document.querySelector('.parks-container');
 const $overlay = document.querySelector('.overlay');
-const $parksSection = document.querySelector('[data-view="parks"]');
 const $detailsContainer = document.querySelector('.details-container');
-const $detailsSection = document.querySelector('.details-section');
-const $backButton = document.querySelector('.back-button');
-const $homeButton = document.querySelector('.home-button');
-const $faveHomeButton = document.querySelector('.favehome-button');
-const $favoritesButton = document.querySelector('.favorites-button');
+const $homeButtons = document.querySelectorAll('.home-button');
 const $favoritesContainer = document.querySelector('.favorites-container');
 const $viewFavoritesButton = document.querySelector('.view-favorites-button');
+const $entryForm = document.querySelector('[data-view="entry-form"]');
+const $searchResults = document.querySelector('[data-view="search-results"]');
+const $favoritesView = document.querySelector('[data-view="favorites"]');
 // Error handling for DOM
 if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
-if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
 if (!$overlay) throw new Error('!$overlay does not exist.');
-if (!$parksSection) throw new Error('!$parksSection does not exist.');
-if (!$detailsSection) throw new Error('!$detailsSection does not exist.');
 if (!$stateSelect) throw new Error('!$stateSelect does not exist.');
-if (!$backButton) throw new Error('!$backButton does not exist.');
-if (!$homeButton) throw new Error('!$homeButton does not exist.');
-if (!$faveHomeButton) throw new Error('!$faveHomeButton does not exist.');
-if (!$favoritesButton) throw new Error('!$favoritesButton does not exist.');
 if (!$viewFavoritesButton)
   throw new Error('!$viewFavoritesButton does not exist.');
 // Fetch parks by state
@@ -39,7 +30,7 @@ async function fetchParks(state) {
       throw new Error(`Failed to fetch parks: ${response.status}`);
     const data = await response.json();
     displayParks(data.data);
-    swapView('parks');
+    swapView('search-results');
   } catch (error) {
     console.error('Error fetching parks:', error);
   }
@@ -51,7 +42,7 @@ function displayParks(parks) {
     $parksContainer.innerHTML = '<p>No parks found.</p>';
     return;
   }
-  parks.forEach((park) => createParkCard(park));
+  parks.forEach((park) => $parksContainer.appendChild(createParkCard(park)));
 }
 // To create park card
 function createParkCard(park) {
@@ -81,7 +72,7 @@ function createParkCard(park) {
   parkCard.appendChild(image);
   parkCard.appendChild(name);
   parkCard.addEventListener('click', () => showParkDetails(park));
-  $parksContainer.appendChild(parkCard);
+  return parkCard;
 }
 // LocalStorage Favorites Logic
 function getFavorites() {
@@ -111,16 +102,14 @@ function toggleFavorite(park) {
 }
 // Display all favorites PArks
 function displayAllFavorites() {
-  $parksContainer.innerHTML = ''; // Clear previous results
+  $favoritesContainer.innerHTML = ''; // Clear previous results
   const favorites = getFavorites();
-  favorites.forEach((park) => createParkCard(park));
+  favorites.forEach((park) =>
+    $favoritesContainer.appendChild(createParkCard(park)),
+  );
 }
 // Show park details
 function showParkDetails(park) {
-  if (!$detailsContainer) {
-    console.error('Details container is missing.');
-    return;
-  }
   $detailsContainer.innerHTML = ''; // Clear previous details
   const parkName = document.createElement('h2');
   parkName.textContent = park.fullName;
@@ -130,6 +119,8 @@ function showParkDetails(park) {
   parkImage.classList.add('park-image-large');
   const parkDescription = document.createElement('p');
   parkDescription.textContent = park.description || 'No description available.';
+  const $buttonsContainer = document.createElement('div');
+  $buttonsContainer.classList.add('details-button-container');
   const favoriteButton = document.createElement('button');
   favoriteButton.textContent = isFavorite(park.fullName)
     ? 'Added to Favorites'
@@ -140,44 +131,38 @@ function showParkDetails(park) {
       ? 'Added to Favorites'
       : 'Add to Favorites';
   });
+  const $backButton = document.createElement('button');
+  $backButton.textContent = 'Return to results';
+  $backButton.addEventListener('click', () => swapView('search-results'));
   $detailsContainer.appendChild(parkName);
   $detailsContainer.appendChild(parkImage);
   $detailsContainer.appendChild(parkDescription);
-  $detailsContainer.appendChild(favoriteButton);
-  swapView('details');
+  $buttonsContainer.append($backButton, favoriteButton);
+  $detailsContainer.appendChild($buttonsContainer);
+  swapView('individual-park');
 }
 // View swapping
 function swapView(viewName) {
-  if (!$overlay) throw new Error('!$overlay does not exist.');
-  if (!$parksSection) throw new Error('!$parksSection does not exist.');
-  if (!$detailsSection) throw new Error('!$detailsSection does not exist.');
-  if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
-  if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
-  $overlay.classList.toggle('hidden', viewName !== 'entry-form');
-  $parksContainer.classList.toggle('hidden', viewName !== 'parks');
-  $parksSection.classList.toggle('hidden', viewName !== 'parks');
-  $detailsSection.classList.toggle('hidden', viewName !== 'details');
-  $detailsContainer.classList.toggle('hidden', viewName !== 'details');
-  $favoritesContainer.classList.toggle('hidden', viewName !== 'favorites');
-  $viewFavoritesButton.classList.toggle('hidden', viewName !== 'favorites');
-  if (viewName === 'details') {
-    $backButton.classList.remove('hidden'); // Show back button --> 'details view'
-    $homeButton.classList.add('hidden'); // Hide home button --> 'details view'
+  if (viewName === 'entry-form') {
+    $entryForm?.classList.remove('hidden');
+    $searchResults?.classList.add('hidden');
+    $favoritesView?.classList.add('hidden');
+    $detailsContainer.classList.add('hidden');
+  } else if (viewName === 'search-results') {
+    $searchResults?.classList.remove('hidden');
+    $entryForm?.classList.add('hidden');
+    $favoritesView?.classList.add('hidden');
+    $detailsContainer.classList.add('hidden');
+  } else if (viewName === 'individual-park') {
     $detailsContainer.classList.remove('hidden');
-    $favoritesButton.classList.remove('hidden'); // Show favorites button --> 'details view'
-  } else if (viewName === 'parks') {
-    $backButton.classList.add('hidden'); // Hide back button --> 'parks view'
-    $homeButton.classList.remove('hidden'); // Show home button --> 'parks view'
-    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'parks view'
+    $searchResults?.classList.add('hidden');
+    $entryForm?.classList.add('hidden');
+    $favoritesView?.classList.add('hidden');
   } else if (viewName === 'favorites') {
-    $overlay.classList.add('hidden');
-    $backButton.classList.remove('hidden'); // Show back button in favorites view
-    $homeButton.classList.remove('hidden'); // Show home button in favorites view
-    $favoritesContainer.classList.add('hidden'); // Hide favorites button in favorites view
-  } else {
-    $backButton.classList.add('hidden'); // Hide back button --> 'other views'
-    $homeButton.classList.add('hidden'); // Hide back button --> 'other views'
-    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'other views'
+    $favoritesView?.classList.remove('hidden');
+    $entryForm?.classList.add('hidden');
+    $searchResults?.classList.add('hidden');
+    $detailsContainer.classList.add('hidden');
   }
 }
 // Event Listeners
@@ -185,29 +170,20 @@ $stateSelect.addEventListener('change', () => {
   const state = $stateSelect.value;
   if (state) {
     fetchParks(state);
-    swapView('parks');
   }
 });
-window.addEventListener('DOMContentLoaded', displayAllFavorites);
-$viewFavoritesButton.addEventListener('click', () => {
-  swapView('favorites');
-});
-$favoritesButton.addEventListener('click', () => {
-  swapView('favorites');
-});
-// Back Button Functionality
-$backButton.addEventListener('click', () => {
-  if ($detailsContainer) {
-    $detailsContainer.innerHTML = '';
-  }
-  swapView('parks');
-});
-$faveHomeButton.addEventListener('click', () => {
+window.addEventListener('DOMContentLoaded', () => {
   swapView('entry-form');
+});
+$viewFavoritesButton.addEventListener('click', () => {
+  displayAllFavorites();
+  swapView('favorites');
 });
 // Home Button Functionality
-$homeButton.addEventListener('click', () => {
-  const form = document.querySelector('form');
-  if (form) form.reset();
-  swapView('entry-form');
-});
+$homeButtons.forEach((button) =>
+  button.addEventListener('click', () => {
+    const form = document.querySelector('form');
+    if (form) form.reset();
+    swapView('entry-form');
+  }),
+);

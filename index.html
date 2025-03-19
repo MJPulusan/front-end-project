@@ -54,14 +54,16 @@
           </div>
         </form>
 
-        <div data-view="view-info" class="hidden" id="entryInfo"></div>
-        <div id="overlay2">
-          <div class="details-container hidden">
+        <!-- <button class="home-button"></button> -->
+
+        <!-- <div data-view="view-info" class="hidden" id="entryInfo"></div> -->
+        <!-- <div id="overlay2">
+          <div class="details-container">
             <button class="favorites-button">Add to Favorites</button>
             <h1>My Favorite Parks</h1>
             <button class="favehome-button">Home</button>
           </div>
-          <div class="details-section hidden">
+          <div class="details-section">
             <button class="back-button">Back</button>
             <div class="favorites-container">
               <div id="overlay3">
@@ -69,12 +71,22 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
-
-      <div data-view="parks" class="hidden">
+      <div data-view="search-results">
+        <div class="button-container">
+          <button class="home-button">Go back home</button>
+        </div>
         <div class="parks-container"></div>
-        <button class="home-button hidden"></button>
+      </div>
+      <div data-view="individual-park">
+        <div class="details-container"></div>
+      </div>
+      <div data-view="favorites">
+        <div class="button-container">
+          <button class="home-button">Go back home</button>
+        </div>
+        <div class="favorites-container"></div>
       </div>
 
       <footer class="footer-text">

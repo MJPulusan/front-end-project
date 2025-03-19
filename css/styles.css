@@ -3,8 +3,10 @@ body {
   margin: 0;
   padding: 0;
   background: url('../images/lower-antelope-canyon.jpg') center center/cover;
-  height: 100vh;
-  display: flex;
+  background-image: no-repeat;
+  min-height: 100vh;
+
+  /* display: flex; */
 }
 
 .footer-text {
@@ -223,7 +225,8 @@ button:hover {
   cursor: pointer;
   transition: 0.5s;
   padding: 6px 16px;
-  position: absolute;
+
+  /* position: absolute; */
   align-items: center;
 }
 
@@ -244,9 +247,12 @@ button:hover {
   cursor: pointer;
   transition: 0.5s;
   padding: 4px 16px;
-  float: right;
-  margin-right: 6%;
-  margin-top: 11%;
+
+  /* float: right; */
+
+  /* margin-right: 6%; */
+
+  /* margin-top: 11%; */
 }
 
 #overlay3 {
@@ -263,4 +269,22 @@ button:hover {
   cursor: pointer;
   transition: 0.5s;
   padding: 4px 16px;
+}
+
+.button-container,
+.details-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-container {
+  margin-top: 2rem;
+}
+
+.details-button-container {
+  flex-wrap: wrap;
+
+  @media screen (width >= 567px) {
+    flex-wrap: nowrap;
+  }
 }
