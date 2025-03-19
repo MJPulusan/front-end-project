@@ -16,7 +16,7 @@ body {
   font-size: 1.5em;
 }
 
-.natParkText {
+h3 {
   font-family: 'Julius Sans One', sans-serif;
   font-style: normal;
   color: #f1f37d;
@@ -24,6 +24,7 @@ body {
 }
 
 .visit {
+  color: #f1f37d;
   font-weight: 400;
   font-size: 15px;
   position: absolute;
@@ -40,6 +41,7 @@ body {
 
 h1 {
   /* "National Park" Text background */
+  font-family: 'Julius Sans One', sans-serif;
   font-weight: 550;
   font-size: 25px;
   color: #f0f0f0;
@@ -166,7 +168,7 @@ select {
   background-color: rgba(36, 21, 21, 0.8);
   margin: 10%;
   border-radius: 40px;
-  padding-bottom: 6%;
+  padding-bottom: 3%;
   align-items: center;
   border: 2px solid #ad3131;
 }
@@ -174,13 +176,12 @@ select {
 .details-container h1 {
   font-family: 'Sedan SC', sans-serif;
   font-weight: lighter;
-  font-size: 26px;
+  font-size: 22px;
   color: #f0f0f0;
   text-align: center;
   margin: auto;
   width: 70%;
   padding-top: 5%;
-  letter-spacing: 2px;
 }
 
 .details-container h2 {
@@ -190,7 +191,7 @@ select {
   text-align: center;
   margin: auto;
   width: 70%;
-  padding-top: 5%;
+  padding-top: 7%;
 }
 
 p {
@@ -201,6 +202,7 @@ p {
   width: 85%;
   margin: auto;
   padding-top: 2rem;
+  margin-bottom: 7%;
 }
 
 button {
@@ -214,6 +216,7 @@ button:hover {
   transform: scale(1.1);
 }
 
+.back-button,
 .home-button {
   font-weight: bold;
   font-size: 20px;
@@ -224,16 +227,6 @@ button:hover {
   align-items: center;
 }
 
-.back-button {
-  font-weight: bold;
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.5s;
-  padding: 4px 16px;
-  float: right;
-  margin-right: 20%;
-}
-
 .favorites-container {
   display: flex;
   flex-wrap: wrap;
@@ -242,18 +235,18 @@ button:hover {
   width: 100%;
   padding: 20px;
   animation: grow 1.3s;
-  z-index: 1000; /* to display in front */
 }
 
 .details-container button {
   /* home-button in favorites */
+  background-color: rgba(44, 40, 36, 0.9);
   font-size: 16px;
   cursor: pointer;
   transition: 0.5s;
   padding: 4px 16px;
   float: right;
-  margin-right: 7%;
-  margin-top: 2%;
+  margin-right: 6%;
+  margin-top: 11%;
 }
 
 #overlay3 {
@@ -270,5 +263,4 @@ button:hover {
   cursor: pointer;
   transition: 0.5s;
   padding: 4px 16px;
-  margin-top: 5%;
 }

@@ -18,7 +18,7 @@
       <div data-view="entry-form" class="natParkText">
         <form>
           <div id="container">
-            <div class="overlay hidden">
+            <div class="overlay">
               <div class="row">
                 <h1>Your Destination</h1>
                 <hr />
@@ -47,19 +47,20 @@
                   <option value="wy">Wyoming</option>
                 </select>
               </div>
-              <button class="view-favorites-button">View Favorites</button>
+              <button type="button" class="view-favorites-button">
+                View Favorites
+              </button>
             </div>
           </div>
         </form>
 
+        <div data-view="view-info" class="hidden" id="entryInfo"></div>
         <div id="overlay2">
-          <div data-view="view-info" class="hidden" id="entryInfo"></div>
-          <div class="details-container">
-            <button class="favorites-button hidden">Add to Favorites</button>
+          <div class="details-container hidden">
+            <button class="favorites-button">Add to Favorites</button>
             <h1>My Favorite Parks</h1>
-            <button class="faveback-button">Home</button>
+            <button class="favehome-button">Home</button>
           </div>
-
           <div class="details-section hidden">
             <button class="back-button">Back</button>
             <div class="favorites-container">
@@ -69,18 +70,18 @@
             </div>
           </div>
         </div>
-        <footer class="footer-text">
-          <h3 class="visit">VISIT</h3>
-          <h1 class="np-text">NATIONAL PARKS</h1>
-          <h3 class="today">TODAY.</h3>
-        </footer>
       </div>
 
-      <div data-view="parks">
+      <div data-view="parks" class="hidden">
         <div class="parks-container"></div>
-
-        <button class="home-button hidden">Home</button>
+        <button class="home-button hidden"></button>
       </div>
+
+      <footer class="footer-text">
+        <h3 class="visit">VISIT</h3>
+        <h1 class="np-text">NATIONAL PARKS</h1>
+        <h3 class="today">TODAY.</h3>
+      </footer>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
