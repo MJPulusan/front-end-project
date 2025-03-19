@@ -29,6 +29,9 @@ const $viewFavoritesButton = document.querySelector(
   '.view-favorites-button',
 ) as HTMLElement;
 
+
+const $entryForm = document.querySelector('[data-view="entry-form"]');
+
 // Error handling for DOM
 if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
 if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
@@ -196,39 +199,44 @@ function showParkDetails(park: any): void {
 
 // View swapping
 function swapView(viewName: string): void {
-  if (!$overlay) throw new Error('!$overlay does not exist.');
-  if (!$parksSection) throw new Error('!$parksSection does not exist.');
-  if (!$detailsSection) throw new Error('!$detailsSection does not exist.');
-  if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
-  if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
-
-  $overlay.classList.toggle('hidden', viewName !== 'entry-form');
-  $parksContainer.classList.toggle('hidden', viewName !== 'parks');
-  $parksSection.classList.toggle('hidden', viewName !== 'parks');
-  $detailsSection.classList.toggle('hidden', viewName !== 'details');
-  $detailsContainer.classList.toggle('hidden', viewName !== 'details');
-  $favoritesContainer.classList.toggle('hidden', viewName !== 'favorites');
-  $viewFavoritesButton.classList.toggle('hidden', viewName !== 'favorites');
-
-  if (viewName === 'details') {
-    $backButton.classList.remove('hidden'); // Show back button --> 'details view'
-    $homeButton.classList.add('hidden'); // Hide home button --> 'details view'
-    $detailsContainer.classList.remove('hidden');
-    $favoritesButton.classList.remove('hidden'); // Show favorites button --> 'details view'
+  if (viewName === 'entry-form') {
+    $entryForm?.classList.remove("hidden");
   } else if (viewName === 'parks') {
-    $backButton.classList.add('hidden'); // Hide back button --> 'parks view'
-    $homeButton.classList.remove('hidden'); // Show home button --> 'parks view'
-    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'parks view'
-  } else if (viewName === 'favorites') {
-    $overlay.classList.add('hidden');
-    $backButton.classList.remove('hidden'); // Show back button in favorites view
-    $homeButton.classList.remove('hidden'); // Show home button in favorites view
-    $favoritesContainer.classList.add('hidden'); // Hide favorites button in favorites view
-  } else {
-    $backButton.classList.add('hidden'); // Hide back button --> 'other views'
-    $homeButton.classList.add('hidden'); // Hide back button --> 'other views'
-    $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'other views'
+    
   }
+  // if (!$overlay) throw new Error('!$overlay does not exist.');
+  // if (!$parksSection) throw new Error('!$parksSection does not exist.');
+  // if (!$detailsSection) throw new Error('!$detailsSection does not exist.');
+  // if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
+  // if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
+
+  // $overlay.classList.toggle('hidden', viewName !== 'entry-form');
+  // $parksContainer.classList.toggle('hidden', viewName !== 'parks');
+  // $parksSection.classList.toggle('hidden', viewName !== 'parks');
+  // $detailsSection.classList.toggle('hidden', viewName !== 'details');
+  // $detailsContainer.classList.toggle('hidden', viewName !== 'details');
+  // $favoritesContainer.classList.toggle('hidden', viewName !== 'favorites');
+  // $viewFavoritesButton.classList.toggle('hidden', viewName !== 'favorites');
+
+  // if (viewName === 'details') {
+  //   $backButton.classList.remove('hidden'); // Show back button --> 'details view'
+  //   $homeButton.classList.add('hidden'); // Hide home button --> 'details view'
+  //   $detailsContainer.classList.remove('hidden');
+  //   $favoritesButton.classList.remove('hidden'); // Show favorites button --> 'details view'
+  // } else if (viewName === 'parks') {
+  //   $backButton.classList.add('hidden'); // Hide back button --> 'parks view'
+  //   $homeButton.classList.remove('hidden'); // Show home button --> 'parks view'
+  //   $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'parks view'
+  // } else if (viewName === 'favorites') {
+  //   $overlay.classList.add('hidden');
+  //   $backButton.classList.remove('hidden'); // Show back button in favorites view
+  //   $homeButton.classList.remove('hidden'); // Show home button in favorites view
+  //   $favoritesContainer.classList.add('hidden'); // Hide favorites button in favorites view
+  // } else {
+  //   $backButton.classList.add('hidden'); // Hide back button --> 'other views'
+  //   $homeButton.classList.add('hidden'); // Hide back button --> 'other views'
+  //   $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'other views'
+  // }
 }
 
 // Event Listeners
