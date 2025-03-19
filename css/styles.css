@@ -58,11 +58,12 @@ h1 {
   align-items: center;
   width: 70%;
   padding-top: 2rem;
-  padding-bottom: 6rem;
+  padding-bottom: 3rem;
   border-radius: 40px;
   position: absolute;
   top: 30%;
   left: 15%;
+  border: 2px solid #ad3131;
 }
 
 label {
@@ -164,10 +165,22 @@ select {
 .details-container {
   background-color: rgba(36, 21, 21, 0.8);
   margin: 10%;
-  padding-bottom: 5%;
   border-radius: 40px;
+  padding-bottom: 6%;
   align-items: center;
-  z-index: 1000;
+  border: 2px solid #ad3131;
+}
+
+.details-container h1 {
+  font-family: 'Sedan SC', sans-serif;
+  font-weight: lighter;
+  font-size: 26px;
+  color: #f0f0f0;
+  text-align: center;
+  margin: auto;
+  width: 70%;
+  padding-top: 5%;
+  letter-spacing: 2px;
 }
 
 .details-container h2 {
@@ -190,12 +203,20 @@ p {
   padding-top: 2rem;
 }
 
-.home-button {
-  background-color: rgba(44, 36, 36, 0.6);
+button {
+  background-color: rgba(44, 40, 36, 0.9);
+  border-color: #908781;
   color: #f0f0f0;
   font-family: 'Julius Sans One', sans-serif;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.home-button {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   transition: 0.5s;
   padding: 6px 16px;
@@ -203,48 +224,15 @@ p {
   align-items: center;
 }
 
-.home-button:hover {
-  transform: scale(1.1);
-}
-
 .back-button {
-  background-color: rgba(44, 36, 36, 0.6);
-  color: #f0f0f0;
-  font-family: 'Julius Sans One', sans-serif;
+  font-weight: bold;
   font-size: 20px;
   cursor: pointer;
   transition: 0.5s;
   padding: 4px 16px;
   float: right;
+  margin-right: 20%;
 }
-
-.back-button:hover {
-  transform: scale(1.1);
-}
-
-.favorites-button {
-  background-color: rgba(44, 36, 36, 0.8);
-  color: #f0f0f0;
-  font-family: 'Julius Sans One', sans-serif;
-  font-size: 20px;
-  cursor: pointer;
-  transition: 0.5s;
-  padding: 4px 16px;
-  float: right;
-  margin-right: 11%;
-}
-
-.favorites-button:hover {
-  transform: scale(1.1);
-}
-
-/* #overlay3 {
-  background-color: rgba(213, 204, 204, 0.8);
-  margin: 10%;
-  padding-bottom: 5%;
-  align-items: center;
-  z-index: 1000;
-} */
 
 .favorites-container {
   display: flex;
@@ -257,6 +245,30 @@ p {
   z-index: 1000; /* to display in front */
 }
 
-/* .park-card img {
-  width: 40%;
-} */
+.details-container button {
+  /* home-button in favorites */
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 4px 16px;
+  float: right;
+  margin-right: 7%;
+  margin-top: 2%;
+}
+
+#overlay3 {
+  background-color: rgba(36, 21, 21, 0.8);
+  margin: 10%;
+  padding-bottom: 13%;
+  border-radius: 40px;
+  align-items: center;
+  z-index: 1000;
+}
+
+.view-favorites-button {
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 4px 16px;
+  margin-top: 5%;
+}

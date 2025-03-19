@@ -18,7 +18,7 @@
       <div data-view="entry-form" class="natParkText">
         <form>
           <div id="container">
-            <div class="overlay">
+            <div class="overlay hidden">
               <div class="row">
                 <h1>Your Destination</h1>
                 <hr />
@@ -54,17 +54,17 @@
 
         <div id="overlay2">
           <div data-view="view-info" class="hidden" id="entryInfo"></div>
-          <div class="details-container"></div>
-
-          <div class="details-section">
+          <div class="details-container">
             <button class="favorites-button hidden">Add to Favorites</button>
-            <button class="back-button hidden">Back</button>
+            <h1>My Favorite Parks</h1>
+            <button class="faveback-button">Home</button>
+          </div>
 
-            <div id="overlay3">
-              <section data-view="favorites"></section>
-              <h2>Favorite Parks</h2>
-              <div class="favorites-container">
-                <button class="back-button">Back</button>
+          <div class="details-section hidden">
+            <button class="back-button">Back</button>
+            <div class="favorites-container">
+              <div id="overlay3">
+                <section data-view="favorites"></section>
               </div>
             </div>
           </div>

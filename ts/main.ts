@@ -16,11 +16,17 @@ const $detailsSection = document.querySelector(
 ) as HTMLElement;
 const $backButton = document.querySelector('.back-button') as HTMLElement;
 const $homeButton = document.querySelector('.home-button') as HTMLElement;
+const $favebackButton = document.querySelector(
+  '.faveback-button',
+) as HTMLElement;
 const $favoritesButton = document.querySelector(
   '.favorites-button',
 ) as HTMLElement;
+const $favoritesContainer = document.querySelector(
+  '.favorites-container',
+) as HTMLElement;
 
-// ✅ Error handling for missing DOM elements
+// Error handling for DOM
 if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
 if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
 if (!$overlay) throw new Error('!$overlay does not exist.');
@@ -29,9 +35,10 @@ if (!$detailsSection) throw new Error('!$detailsSection does not exist.');
 if (!$stateSelect) throw new Error('!$stateSelect does not exist.');
 if (!$backButton) throw new Error('!$backButton does not exist.');
 if (!$homeButton) throw new Error('!$homeButton does not exist.');
+if (!$favebackButton) throw new Error('!$favebackButton does not exist.');
 if (!$favoritesButton) throw new Error('!$favoritesButton does not exist.');
 
-// ✅ Fetch parks by state
+// Fetch parks by state
 async function fetchParks(state: string): Promise<void> {
   if (!state) {
     console.error('State is required.');
@@ -53,7 +60,7 @@ async function fetchParks(state: string): Promise<void> {
   }
 }
 
-// ✅ Display parks in grid view
+// Display parks in grid view
 function displayParks(parks: any[]): void {
   $parksContainer.innerHTML = ''; // Clear previous results
 
@@ -65,7 +72,7 @@ function displayParks(parks: any[]): void {
   parks.forEach((park) => createParkCard(park));
 }
 
-// ✅ Create park card
+// To create park card
 function createParkCard(park: any): void {
   const parkCard = document.createElement('div');
   parkCard.classList.add('park-card');
@@ -104,7 +111,7 @@ function createParkCard(park: any): void {
   $parksContainer.appendChild(parkCard);
 }
 
-// ✅ LocalStorage Favorites Logic
+// LocalStorage Favorites Logic
 function getFavorites(): any[] {
   return JSON.parse(localStorage.getItem('favorites') || '[]');
 }
@@ -135,14 +142,14 @@ function toggleFavorite(park: any): void {
   }
 }
 
-// ✅ Display all favorites
+// Display all favorites PArks
 function displayAllFavorites(): void {
   $parksContainer.innerHTML = ''; // Clear previous results
   const favorites = getFavorites();
   favorites.forEach((park) => createParkCard(park));
 }
 
-// ✅ Show park details
+// Show park details
 function showParkDetails(park: any): void {
   if (!$detailsContainer) {
     console.error('Details container is missing.');
@@ -182,7 +189,7 @@ function showParkDetails(park: any): void {
   swapView('details');
 }
 
-// ✅ View swapping logic
+// View swapping
 function swapView(viewName: string): void {
   if (!$overlay) throw new Error('!$overlay does not exist.');
   if (!$parksSection) throw new Error('!$parksSection does not exist.');
@@ -195,6 +202,7 @@ function swapView(viewName: string): void {
   $parksSection.classList.toggle('hidden', viewName !== 'parks');
   $detailsSection.classList.toggle('hidden', viewName !== 'details');
   $detailsContainer.classList.toggle('hidden', viewName !== 'details');
+  $favoritesContainer.classList.toggle('hidden', viewName !== 'favorites');
 
   if (viewName === 'details') {
     $backButton.classList.remove('hidden'); // Show back button --> 'details view'
@@ -205,6 +213,11 @@ function swapView(viewName: string): void {
     $backButton.classList.add('hidden'); // Hide back button --> 'parks view'
     $homeButton.classList.remove('hidden'); // Show home button --> 'parks view'
     $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'parks view'
+  } else if (viewName === 'favorites') {
+    $overlay.classList.add('hidden');
+    $backButton.classList.remove('hidden'); // Show back button in favorites view
+    $homeButton.classList.remove('hidden'); // Show home button in favorites view
+    $favoritesContainer.classList.remove('hidden'); // Hide favorites button in favorites view
   } else {
     $backButton.classList.add('hidden'); // Hide back button --> 'other views'
     $homeButton.classList.add('hidden'); // Hide back button --> 'other views'
@@ -212,13 +225,19 @@ function swapView(viewName: string): void {
   }
 }
 
-// ✅ Event Listeners
+// Event Listeners
 $stateSelect.addEventListener('change', () => {
   const state = $stateSelect.value;
   if (state) fetchParks(state);
 });
 
-// ✅ Back Button Functionality
+// Favorites Button
+$favoritesButton.addEventListener('click', displayAllFavorites);
+
+//  On page load → display favorites
+window.addEventListener('DOMContentLoaded', displayAllFavorites);
+
+// Back Button Functionality
 $backButton.addEventListener('click', () => {
   if ($detailsContainer) {
     $detailsContainer.innerHTML = '';
@@ -226,15 +245,13 @@ $backButton.addEventListener('click', () => {
   swapView('parks');
 });
 
-// ✅ Home Button Functionality
+$favebackButton.addEventListener('click', () => {
+  swapView('entry-form');
+});
+
+// Home Button Functionality
 $homeButton.addEventListener('click', () => {
   const form = document.querySelector('form') as HTMLFormElement;
   if (form) form.reset();
   swapView('entry-form');
 });
-
-// ✅ Favorites Button
-$favoritesButton.addEventListener('click', displayAllFavorites);
-
-// ✅ On page load → display favorites
-window.addEventListener('DOMContentLoaded', displayAllFavorites);
