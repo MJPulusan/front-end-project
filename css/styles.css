@@ -237,3 +237,26 @@ p {
 .favorites-button:hover {
   transform: scale(1.1);
 }
+
+/* #overlay3 {
+  background-color: rgba(213, 204, 204, 0.8);
+  margin: 10%;
+  padding-bottom: 5%;
+  align-items: center;
+  z-index: 1000;
+} */
+
+.favorites-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  padding: 20px;
+  animation: grow 1.3s;
+  z-index: 1000; /* to display in front */
+}
+
+/* .park-card img {
+  width: 40%;
+} */

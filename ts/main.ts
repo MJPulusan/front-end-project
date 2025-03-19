@@ -1,145 +1,200 @@
 const $apiKey = 'tjsESTV0ZCq5TAudXkKvHgf2h8rRIqIkhHziRF5i';
+
+// DOM Elements
 const $stateSelect = document.querySelector('#states') as HTMLSelectElement;
-const $parksContainer = document.querySelector('.parks-container');
+const $parksContainer = document.querySelector(
+  '.parks-container',
+) as HTMLElement;
 const $overlay = document.querySelector('.overlay') as HTMLElement;
 const $parksSection = document.querySelector(
   '[data-view="parks"]',
 ) as HTMLElement;
-const $detailsContainer = document.querySelector('.details-container');
-const $detailsSection = document.querySelector('.details-section');
+const $detailsContainer = document.querySelector(
+  '.details-container',
+) as HTMLElement;
+const $detailsSection = document.querySelector(
+  '.details-section',
+) as HTMLElement;
 const $backButton = document.querySelector('.back-button') as HTMLElement;
 const $homeButton = document.querySelector('.home-button') as HTMLElement;
-const $overlay2 = document.querySelector('#overlay2') as HTMLElement;
 const $favoritesButton = document.querySelector(
   '.favorites-button',
 ) as HTMLElement;
 
-// Error Checks
-if (!$apiKey) throw new Error('!$apiKey is missing');
-if (!$stateSelect) throw new Error('!$stateSelect dropdown does not exist.');
-if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
-if (!$backButton) throw new Error('!$backButton does not exist.');
-if (!$homeButton) throw new Error('!$homeButton does not exist.');
-if (!$overlay2) throw new Error('!$overlay2 does not exist.');
-if (!$favoritesButton) throw new Error('!$favoritesButton does not exist.');
-
-function getParkUrl(state: string): string {
-  return `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
+// ✅ Error handling for missing DOM elements
+if (
+  !$parksContainer ||
+  !$detailsContainer ||
+  !$overlay ||
+  !$parksSection ||
+  !$detailsSection ||
+  !$stateSelect ||
+  !$backButton ||
+  !$homeButton ||
+  !$favoritesButton
+) {
+  console.error('Some essential DOM elements are missing.');
+  throw new Error('Missing DOM elements. Check your HTML structure.');
 }
 
-// to fetch Parks Data from API
+// ✅ Fetch parks by state
 async function fetchParks(state: string): Promise<void> {
-  if (!state) throw new Error('State is required.');
+  if (!state) {
+    console.error('State is required.');
+    return;
+  }
 
-  const url = getParkUrl(state);
+  const url = `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
+
   try {
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    if (!response.ok)
+      throw new Error(`Failed to fetch parks: ${response.status}`);
+
     const data = await response.json();
     displayParks(data.data);
-
     swapView('parks');
   } catch (error) {
     console.error('Error fetching parks:', error);
   }
 }
 
-// Display Parks Data
+// ✅ Display parks in grid view
 function displayParks(parks: any[]): void {
-  if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
+  $parksContainer.innerHTML = ''; // Clear previous results
 
-  $parksContainer.innerHTML = ''; // Clear 'previous results'
+  if (parks.length === 0) {
+    $parksContainer.innerHTML = '<p>No parks found.</p>';
+    return;
+  }
 
-  parks.forEach((park: any) => {
-    if (park.images.length > 0) {
-      const parkCard = document.createElement('div');
-      parkCard.classList.add('park-card');
-
-      // Image
-      const image = document.createElement('img');
-      image.src = park.images[0].url;
-      image.alt = park.fullName;
-      image.classList.add('park-image');
-
-      // Park Name
-      const name = document.createElement('h4');
-      name.textContent = park.fullName;
-      name.classList.add('park-name');
-
-      // Click event --> full details
-      parkCard.addEventListener('click', () => showParkDetails(park));
-
-      parkCard.appendChild(image);
-      parkCard.appendChild(name);
-      $parksContainer.appendChild(parkCard);
-    }
-  });
+  parks.forEach((park) => createParkCard(park));
 }
 
-const favorites = new Set(
-  JSON.parse(localStorage.getItem('favorites') || '[]'),
-);
+// ✅ Create park card
+function createParkCard(park: any): void {
+  const parkCard = document.createElement('div');
+  parkCard.classList.add('park-card');
+
+  const image = document.createElement('img');
+  image.src = park.images?.[0]?.url || 'images/no-image.jpg';
+  image.alt = park.fullName;
+  image.classList.add('park-image');
+
+  const name = document.createElement('h4');
+  name.textContent = park.fullName;
+  name.classList.add('park-name');
+
+  const description = document.createElement('p');
+  description.textContent = park.description || 'No description available.';
+  description.classList.add('park-description');
+
+  const favoriteButton = document.createElement('button');
+  favoriteButton.classList.add('favorite-toggle');
+  favoriteButton.textContent = isFavorite(park.fullName)
+    ? 'Added to Favorites'
+    : 'Add to Favorites';
+
+  favoriteButton.addEventListener('click', () => {
+    toggleFavorite(park);
+    favoriteButton.textContent = isFavorite(park.fullName)
+      ? 'Added to Favorites'
+      : 'Add to Favorites';
+  });
+
+  parkCard.appendChild(image);
+  parkCard.appendChild(name);
+
+  parkCard.addEventListener('click', () => showParkDetails(park));
+
+  $parksContainer.appendChild(parkCard);
+}
+
+// ✅ LocalStorage Favorites Logic
+function getFavorites(): any[] {
+  return JSON.parse(localStorage.getItem('favorites') || '[]');
+}
+
+function saveFavorites(favorites: any[]): void {
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+
+function isFavorite(parkName: string): boolean {
+  const favorites = getFavorites();
+  return favorites.some((fav) => fav.fullName === parkName);
+}
 
 function toggleFavorite(park: any): void {
-  if (favorites.has(park.fullName)) {
-    favorites.delete(park.fullName);
+  const favorites = getFavorites();
+  const exists = favorites.some((fav) => fav.fullName === park.fullName);
+
+  if (exists) {
+    // Remove if already in favorites
+    const updatedFavorites = favorites.filter(
+      (fav) => fav.fullName !== park.fullName,
+    );
+    saveFavorites(updatedFavorites);
   } else {
-    favorites.add(park.fullName);
+    // Add to favorites
+    favorites.push(park);
+    saveFavorites(favorites);
   }
-  localStorage.setItem('favorites', JSON.stringify([...favorites]));
-  updateFavoritesButton(park.fullName);
 }
 
-function updateFavoritesButton(parkName: any): void {
-  if (favorites.has(parkName)) {
-    $favoritesButton.textContent = 'Remove from Favorites';
-  } else {
-    $favoritesButton.textContent = 'Add to Favorites';
+// ✅ Display all favorites
+function displayAllFavorites(): void {
+  $parksContainer.innerHTML = ''; // Clear previous results
+
+  const favorites = getFavorites();
+  if (favorites.length === 0) {
+    $parksContainer.innerHTML = '<p>No favorite parks added yet.</p>';
+    return;
   }
+
+  favorites.forEach((park) => createParkCard(park));
 }
 
-// To show Full Park Details
+// ✅ Show park details
 function showParkDetails(park: any): void {
-  if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
+  if (!$detailsContainer) {
+    console.error('Details container is missing.');
+    return;
+  }
 
-  $detailsContainer.innerHTML = ''; // Clear 'previous details'
+  $detailsContainer.innerHTML = ''; // Clear previous details
 
   const parkName = document.createElement('h2');
   parkName.textContent = park.fullName;
 
   const parkImage = document.createElement('img');
-  if (park.images.length > 0) {
-    parkImage.src = park.images[1].url;
-  } else {
-    parkImage.src = 'images/no-image.jpg';
-  }
-
+  parkImage.src = park.images?.[0]?.url || 'images/no-image.jpg';
   parkImage.alt = park.fullName;
   parkImage.classList.add('park-image-large');
 
   const parkDescription = document.createElement('p');
-  parkDescription.textContent = park.description;
+  parkDescription.textContent = park.description || 'No description available.';
+
+  const favoriteButton = document.createElement('button');
+  favoriteButton.textContent = isFavorite(park.fullName)
+    ? 'Added to Favorites'
+    : 'Add to Favorites';
+
+  favoriteButton.addEventListener('click', () => {
+    toggleFavorite(park);
+    favoriteButton.textContent = isFavorite(park.fullName)
+      ? 'Added to Favorites'
+      : 'Add to Favorites';
+  });
 
   $detailsContainer.appendChild(parkName);
   $detailsContainer.appendChild(parkImage);
   $detailsContainer.appendChild(parkDescription);
+  $detailsContainer.appendChild(favoriteButton);
 
   swapView('details');
-  updateFavoritesButton(park.fullName);
-
-  // Set up event listener for favorites button
-  $favoritesButton.onclick = (): void => toggleFavorite(park);
 }
 
-if ($favoritesButton) {
-  $favoritesButton.addEventListener('click', () => {
-    console.log('Favorites button clicked!');
-  });
-}
-
-// Viewswapping between views
+// ✅ View swapping logic
 function swapView(viewName: string): void {
   if (!$overlay) throw new Error('!$overlay does not exist.');
   if (!$parksSection) throw new Error('!$parksSection does not exist.');
@@ -169,12 +224,13 @@ function swapView(viewName: string): void {
   }
 }
 
-// Event Listeners
+// ✅ Event Listeners
 $stateSelect.addEventListener('change', () => {
-  fetchParks($stateSelect.value);
+  const state = $stateSelect.value;
+  if (state) fetchParks(state);
 });
 
-// Back button event
+// ✅ Back Button Functionality
 $backButton.addEventListener('click', () => {
   if ($detailsContainer) {
     $detailsContainer.innerHTML = '';
@@ -182,12 +238,15 @@ $backButton.addEventListener('click', () => {
   swapView('parks');
 });
 
-// Home button event
+// ✅ Home Button Functionality
 $homeButton.addEventListener('click', () => {
   const form = document.querySelector('form') as HTMLFormElement;
-
-  if (form) {
-    form.reset(); // Resets dropdown --> default option
-  }
+  if (form) form.reset();
   swapView('entry-form');
 });
+
+// ✅ Favorites Button
+$favoritesButton.addEventListener('click', displayAllFavorites);
+
+// ✅ On page load → display favorites
+window.addEventListener('DOMContentLoaded', displayAllFavorites);

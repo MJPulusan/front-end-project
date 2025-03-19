@@ -1,5 +1,6 @@
 'use strict';
 const $apiKey = 'tjsESTV0ZCq5TAudXkKvHgf2h8rRIqIkhHziRF5i';
+// DOM Elements
 const $stateSelect = document.querySelector('#states');
 const $parksContainer = document.querySelector('.parks-container');
 const $overlay = document.querySelector('.overlay');
@@ -8,28 +9,33 @@ const $detailsContainer = document.querySelector('.details-container');
 const $detailsSection = document.querySelector('.details-section');
 const $backButton = document.querySelector('.back-button');
 const $homeButton = document.querySelector('.home-button');
-const $overlay2 = document.querySelector('#overlay2');
 const $favoritesButton = document.querySelector('.favorites-button');
-// Error Checks
-if (!$apiKey) throw new Error('!$apiKey is missing');
-if (!$stateSelect) throw new Error('!$stateSelect dropdown does not exist.');
-if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
-if (!$backButton) throw new Error('!$backButton does not exist.');
-if (!$homeButton) throw new Error('!$homeButton does not exist.');
-if (!$overlay2) throw new Error('!$overlay2 does not exist.');
-if (!$favoritesButton) throw new Error('!$favoritesButton does not exist.');
-function getParkUrl(state) {
-  return `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
+// ✅ Error handling for missing DOM elements
+if (
+  !$parksContainer ||
+  !$detailsContainer ||
+  !$overlay ||
+  !$parksSection ||
+  !$detailsSection ||
+  !$stateSelect ||
+  !$backButton ||
+  !$homeButton ||
+  !$favoritesButton
+) {
+  console.error('Some essential DOM elements are missing.');
+  throw new Error('Missing DOM elements. Check your HTML structure.');
 }
-// to fetch Parks Data from API
+// ✅ Fetch parks by state
 async function fetchParks(state) {
-  if (!state) throw new Error('State is required.');
-  const url = getParkUrl(state);
+  if (!state) {
+    console.error('State is required.');
+    return;
+  }
+  const url = `https://developer.nps.gov/api/v1/parks?stateCode=${state}&api_key=${$apiKey}`;
   try {
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    if (!response.ok)
+      throw new Error(`Failed to fetch parks: ${response.status}`);
     const data = await response.json();
     displayParks(data.data);
     swapView('parks');
@@ -37,80 +43,113 @@ async function fetchParks(state) {
     console.error('Error fetching parks:', error);
   }
 }
-// Display Parks Data
+// ✅ Display parks in grid view
 function displayParks(parks) {
-  if (!$parksContainer) throw new Error('!$parksContainer does not exist.');
-  $parksContainer.innerHTML = ''; // Clear 'previous results'
-  parks.forEach((park) => {
-    if (park.images.length > 0) {
-      const parkCard = document.createElement('div');
-      parkCard.classList.add('park-card');
-      // Image
-      const image = document.createElement('img');
-      image.src = park.images[0].url;
-      image.alt = park.fullName;
-      image.classList.add('park-image');
-      // Park Name
-      const name = document.createElement('h4');
-      name.textContent = park.fullName;
-      name.classList.add('park-name');
-      // Click event --> full details
-      parkCard.addEventListener('click', () => showParkDetails(park));
-      parkCard.appendChild(image);
-      parkCard.appendChild(name);
-      $parksContainer.appendChild(parkCard);
-    }
+  $parksContainer.innerHTML = ''; // Clear previous results
+  if (parks.length === 0) {
+    $parksContainer.innerHTML = '<p>No parks found.</p>';
+    return;
+  }
+  parks.forEach((park) => createParkCard(park));
+}
+// ✅ Create park card
+function createParkCard(park) {
+  const parkCard = document.createElement('div');
+  parkCard.classList.add('park-card');
+  const image = document.createElement('img');
+  image.src = park.images?.[0]?.url || 'images/no-image.jpg';
+  image.alt = park.fullName;
+  image.classList.add('park-image');
+  const name = document.createElement('h4');
+  name.textContent = park.fullName;
+  name.classList.add('park-name');
+  const description = document.createElement('p');
+  description.textContent = park.description || 'No description available.';
+  description.classList.add('park-description');
+  const favoriteButton = document.createElement('button');
+  favoriteButton.classList.add('favorite-toggle');
+  favoriteButton.textContent = isFavorite(park.fullName)
+    ? 'Added to Favorites'
+    : 'Add to Favorites';
+  favoriteButton.addEventListener('click', () => {
+    toggleFavorite(park);
+    favoriteButton.textContent = isFavorite(park.fullName)
+      ? 'Added to Favorites'
+      : 'Add to Favorites';
   });
+  parkCard.appendChild(image);
+  parkCard.appendChild(name);
+  parkCard.addEventListener('click', () => showParkDetails(park));
+  $parksContainer.appendChild(parkCard);
 }
-const favorites = new Set(
-  JSON.parse(localStorage.getItem('favorites') || '[]'),
-);
+// ✅ LocalStorage Favorites Logic
+function getFavorites() {
+  return JSON.parse(localStorage.getItem('favorites') || '[]');
+}
+function saveFavorites(favorites) {
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+}
+function isFavorite(parkName) {
+  const favorites = getFavorites();
+  return favorites.some((fav) => fav.fullName === parkName);
+}
 function toggleFavorite(park) {
-  if (favorites.has(park.fullName)) {
-    favorites.delete(park.fullName);
+  const favorites = getFavorites();
+  const exists = favorites.some((fav) => fav.fullName === park.fullName);
+  if (exists) {
+    // Remove if already in favorites
+    const updatedFavorites = favorites.filter(
+      (fav) => fav.fullName !== park.fullName,
+    );
+    saveFavorites(updatedFavorites);
   } else {
-    favorites.add(park.fullName);
-  }
-  localStorage.setItem('favorites', JSON.stringify([...favorites]));
-  updateFavoritesButton(park.fullName);
-}
-function updateFavoritesButton(parkName) {
-  if (favorites.has(parkName)) {
-    $favoritesButton.textContent = 'Remove from Favorites';
-  } else {
-    $favoritesButton.textContent = 'Add to Favorites';
+    // Add to favorites
+    favorites.push(park);
+    saveFavorites(favorites);
   }
 }
-// To show Full Park Details
+// ✅ Display all favorites
+function displayAllFavorites() {
+  $parksContainer.innerHTML = ''; // Clear previous results
+  const favorites = getFavorites();
+  if (favorites.length === 0) {
+    $parksContainer.innerHTML = '<p>No favorite parks added yet.</p>';
+    return;
+  }
+  favorites.forEach((park) => createParkCard(park));
+}
+// ✅ Show park details
 function showParkDetails(park) {
-  if (!$detailsContainer) throw new Error('!$detailsContainer does not exist.');
-  $detailsContainer.innerHTML = ''; // Clear 'previous details'
+  if (!$detailsContainer) {
+    console.error('Details container is missing.');
+    return;
+  }
+  $detailsContainer.innerHTML = ''; // Clear previous details
   const parkName = document.createElement('h2');
   parkName.textContent = park.fullName;
   const parkImage = document.createElement('img');
-  if (park.images.length > 0) {
-    parkImage.src = park.images[1].url;
-  } else {
-    parkImage.src = 'images/no-image.jpg';
-  }
+  parkImage.src = park.images?.[0]?.url || 'images/no-image.jpg';
   parkImage.alt = park.fullName;
   parkImage.classList.add('park-image-large');
   const parkDescription = document.createElement('p');
-  parkDescription.textContent = park.description;
+  parkDescription.textContent = park.description || 'No description available.';
+  const favoriteButton = document.createElement('button');
+  favoriteButton.textContent = isFavorite(park.fullName)
+    ? 'Added to Favorites'
+    : 'Add to Favorites';
+  favoriteButton.addEventListener('click', () => {
+    toggleFavorite(park);
+    favoriteButton.textContent = isFavorite(park.fullName)
+      ? 'Added to Favorites'
+      : 'Add to Favorites';
+  });
   $detailsContainer.appendChild(parkName);
   $detailsContainer.appendChild(parkImage);
   $detailsContainer.appendChild(parkDescription);
+  $detailsContainer.appendChild(favoriteButton);
   swapView('details');
-  updateFavoritesButton(park.fullName);
-  // Set up event listener for favorites button
-  $favoritesButton.onclick = () => toggleFavorite(park);
 }
-if ($favoritesButton) {
-  $favoritesButton.addEventListener('click', () => {
-    console.log('Favorites button clicked!');
-  });
-}
-// Viewswapping between views
+// ✅ View swapping logic
 function swapView(viewName) {
   if (!$overlay) throw new Error('!$overlay does not exist.');
   if (!$parksSection) throw new Error('!$parksSection does not exist.');
@@ -137,22 +176,25 @@ function swapView(viewName) {
     $favoritesButton.classList.add('hidden'); // Hide favorites button --> 'other views'
   }
 }
-// Event Listeners
+// ✅ Event Listeners
 $stateSelect.addEventListener('change', () => {
-  fetchParks($stateSelect.value);
+  const state = $stateSelect.value;
+  if (state) fetchParks(state);
 });
-// Back button event
+// ✅ Back Button Functionality
 $backButton.addEventListener('click', () => {
   if ($detailsContainer) {
     $detailsContainer.innerHTML = '';
   }
   swapView('parks');
 });
-// Home button event
+// ✅ Home Button Functionality
 $homeButton.addEventListener('click', () => {
   const form = document.querySelector('form');
-  if (form) {
-    form.reset(); // Resets dropdown --> default option
-  }
+  if (form) form.reset();
   swapView('entry-form');
 });
+// ✅ Favorites Button
+$favoritesButton.addEventListener('click', displayAllFavorites);
+// ✅ On page load → display favorites
+window.addEventListener('DOMContentLoaded', displayAllFavorites);
