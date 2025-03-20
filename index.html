@@ -15,7 +15,7 @@
   <body>
     <header></header>
     <main>
-      <div data-view="entry-form" class="natParkText">
+      <div data-view="entry-form" class="hidden natParkText">
         <form>
           <div id="container">
             <div class="overlay">
@@ -47,30 +47,40 @@
                   <option value="wy">Wyoming</option>
                 </select>
               </div>
+              <button type="button" class="view-favorites-button">
+                View Favorites
+              </button>
             </div>
           </div>
         </form>
+      </div>
+      <div data-view="search-results">
+        <div class="button-container">
+          <button class="home-button">Return to Main Page</button>
+        </div>
+        <div class="parks-container"></div>
+      </div>
+      <div data-view="individual-park">
+        <div class="details-container"></div>
+      </div>
+      <div data-view="favorites">
+        <div class="button-container">
+          <div class="row">
+            <h1>My Favorite Parks</h1>
+          </div>
 
-        <div id="overlay2">
-          <div data-view="view-info" class="hidden" id="entryInfo"></div>
-          <div class="details-container"></div>
-
-          <div class="details-section">
-            <button class="back-button hidden">Back</button>
+          <div class="row">
+            <button class="home-button">Return to Main Page</button>
           </div>
         </div>
-        <footer class="footer-text">
-          <h3 class="visit">VISIT</h3>
-          <h1 class="np-text">NATIONAL PARKS</h1>
-          <h3 class="today">TODAY.</h3>
-        </footer>
+        <div class="favorites-container"></div>
       </div>
 
-      <div data-view="parks">
-        <div class="parks-container"></div>
-
-        <button class="home-button hidden">Home</button>
-      </div>
+      <footer class="footer-text">
+        <h3 class="visit">VISIT</h3>
+        <h1 class="np-text">NATIONAL PARKS</h1>
+        <h3 class="today">TODAY.</h3>
+      </footer>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
