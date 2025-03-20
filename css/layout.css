@@ -5,17 +5,3 @@ hr {
 .hidden {
   display: none !important;
 }
-
-.overlay2 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: stretch;
-  z-index: 1000;
-}
-
-.overlay2 h1 {
-  padding-top: 5px;
-  margin-left: 70px;
-  text-align: left;
-}

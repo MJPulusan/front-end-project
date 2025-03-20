@@ -161,13 +161,13 @@ function showParkDetails(park: any): void {
 
   const favoriteButton = document.createElement('button');
   favoriteButton.textContent = isFavorite(park.fullName)
-    ? 'Added to Favorites'
+    ? 'Remove from Favorites'
     : 'Add to Favorites';
 
   favoriteButton.addEventListener('click', () => {
     toggleFavorite(park);
     favoriteButton.textContent = isFavorite(park.fullName)
-      ? 'Added to Favorites'
+      ? 'Remove from Favorites'
       : 'Add to Favorites';
   });
 
