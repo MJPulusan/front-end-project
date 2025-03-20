@@ -104,9 +104,22 @@ function toggleFavorite(park) {
 function displayAllFavorites() {
   $favoritesContainer.innerHTML = ''; // Clear previous results
   const favorites = getFavorites();
+  if (favorites.length === 0) {
+    // Display empty message when no favorites
+    const emptyMessage = document.createElement('p');
+    emptyMessage.textContent = 'No favorites added yet.';
+    emptyMessage.classList.add('empty-message');
+    $favoritesContainer.appendChild(emptyMessage);
+    return;
+  }
   favorites.forEach((park) =>
     $favoritesContainer.appendChild(createParkCard(park)),
   );
+}
+// clear all localstorage
+function clearAllFavorites() {
+  localStorage.removeItem('favorites'); // clear localstorage
+  displayAllFavorites(); // Re-render the empty state
 }
 // Show park details
 function showParkDetails(park) {

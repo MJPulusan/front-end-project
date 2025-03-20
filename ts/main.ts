@@ -136,6 +136,16 @@ function toggleFavorite(park: any): void {
 function displayAllFavorites(): void {
   $favoritesContainer.innerHTML = ''; // Clear previous results
   const favorites = getFavorites();
+
+  if (favorites.length === 0) {
+    // Display empty message when no favorites
+    const emptyMessage = document.createElement('p');
+    emptyMessage.textContent = 'No favorites added yet.';
+    emptyMessage.classList.add('empty-message');
+    $favoritesContainer.appendChild(emptyMessage);
+    return;
+  }
+
   favorites.forEach((park) =>
     $favoritesContainer.appendChild(createParkCard(park)),
   );
