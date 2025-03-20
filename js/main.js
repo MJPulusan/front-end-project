@@ -123,12 +123,12 @@ function showParkDetails(park) {
   $buttonsContainer.classList.add('details-button-container');
   const favoriteButton = document.createElement('button');
   favoriteButton.textContent = isFavorite(park.fullName)
-    ? 'Remove from Favorites'
+    ? 'Added to Favorites'
     : 'Add to Favorites';
   favoriteButton.addEventListener('click', () => {
     toggleFavorite(park);
     favoriteButton.textContent = isFavorite(park.fullName)
-      ? 'Remove from Favorites'
+      ? 'Added to Favorites'
       : 'Add to Favorites';
   });
   const $backButton = document.createElement('button');
