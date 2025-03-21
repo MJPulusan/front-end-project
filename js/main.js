@@ -116,11 +116,6 @@ function displayAllFavorites() {
     $favoritesContainer.appendChild(createParkCard(park)),
   );
 }
-// clear all localstorage
-function clearAllFavorites() {
-  localStorage.removeItem('favorites'); // clear localstorage
-  displayAllFavorites(); // Re-render the empty state
-}
 // Show park details
 function showParkDetails(park) {
   $detailsContainer.innerHTML = ''; // Clear previous details
