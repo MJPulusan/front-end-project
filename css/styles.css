@@ -3,27 +3,35 @@ body {
   margin: 0;
   padding: 0;
   background: url('../images/lower-antelope-canyon.jpg') center center/cover;
-  height: 100vh;
-  display: flex;
+  background-image: no-repeat;
+  min-height: 100vh;
+
+  /* display: flex; */
 }
 
 .footer-text {
   position: absolute;
-  bottom: 20px;
+  bottom: 0;
   left: 60px;
   letter-spacing: 2px;
   line-height: 1.3;
   font-size: 1.5em;
+  z-index: -1;
 }
 
-.natParkText {
+h3 {
   font-family: 'Julius Sans One', sans-serif;
   font-style: normal;
   color: #f1f37d;
   letter-spacing: 2px;
 }
 
+.np-text {
+  font-family: 'Julius Sans One', sans-serif;
+}
+
 .visit {
+  color: #f1f37d;
   font-weight: 400;
   font-size: 15px;
   position: absolute;
@@ -40,6 +48,7 @@ body {
 
 h1 {
   /* "National Park" Text background */
+  font-family: 'Sedan SC', sans-serif;
   font-weight: 550;
   font-size: 25px;
   color: #f0f0f0;
@@ -58,11 +67,12 @@ h1 {
   align-items: center;
   width: 70%;
   padding-top: 2rem;
-  padding-bottom: 6rem;
+  padding-bottom: 3rem;
   border-radius: 40px;
   position: absolute;
   top: 30%;
   left: 15%;
+  border: 2px solid #ad3131;
 }
 
 label {
@@ -164,10 +174,22 @@ select {
 .details-container {
   background-color: rgba(36, 21, 21, 0.8);
   margin: 10%;
-  padding-bottom: 5%;
   border-radius: 40px;
+  padding-bottom: 3%;
   align-items: center;
+  border: 2px solid #ad3131;
   z-index: 1000;
+}
+
+.details-container h1 {
+  font-family: 'Sedan SC', sans-serif;
+  font-weight: lighter;
+  font-size: 22px;
+  color: #f0f0f0;
+  text-align: center;
+  margin: auto;
+  width: 70%;
+  padding-top: 5%;
 }
 
 .details-container h2 {
@@ -176,7 +198,8 @@ select {
   color: #f0f0f0;
   text-align: center;
   margin: auto;
-  padding-top: 5%;
+  width: 70%;
+  padding-top: 7%;
 }
 
 p {
@@ -184,40 +207,86 @@ p {
   color: #f0f0f0;
   text-align: center;
   font-style: italic;
-  width: 65%;
+  width: 85%;
   margin: auto;
   padding-top: 2rem;
+  margin-bottom: 7%;
+}
+
+button {
+  background-color: rgba(44, 40, 36, 0.9);
+  border-color: #908781;
+  color: #f0f0f0;
+  font-family: 'Julius Sans One', sans-serif;
+}
+
+button:hover {
+  transform: scale(1.1);
 }
 
 .home-button {
-  background-color: rgba(44, 36, 36, 0.6);
-  color: #f0f0f0;
-  font-family: 'Julius Sans One', sans-serif;
   font-weight: bold;
-  font-size: 16px;
+  font-size: px;
   cursor: pointer;
   transition: 0.5s;
   padding: 6px 16px;
-  position: absolute;
   align-items: center;
 }
 
-.home-button:hover {
-  transform: scale(1.1);
+.favorites-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  animation: grow 1.3s;
 }
 
-.back-button {
-  background-color: rgba(44, 36, 36, 0.6);
-  color: #f0f0f0;
-  font-family: 'Julius Sans One', sans-serif;
-  font-size: 20px;
+.details-container button {
+  /* home-button in favorites */
+  background-color: rgba(44, 40, 36, 0.9);
+  font-size: 16px;
   cursor: pointer;
   transition: 0.5s;
   padding: 4px 16px;
-  float: right;
-  margin-right: 10%;
 }
 
-.back-button:hover {
-  transform: scale(1.1);
+.view-favorites-button {
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 4px 16px;
+  margin-top: 20px;
+}
+
+.button-container,
+.details-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button-container {
+  margin-top: 3rem;
+  text-align: center;
+  display: block;
+}
+
+.button-container .home-button {
+  font-family: 'Julius Sans One', sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+}
+
+.button-container h1 {
+  text-align: center;
+}
+
+.details-button-container {
+  flex-wrap: wrap;
+
+  @media screen (width >= 567px) {
+    flex-wrap: nowrap;
+  }
 }
