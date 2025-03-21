@@ -145,7 +145,6 @@ function displayAllFavorites(): void {
     $favoritesContainer.appendChild(emptyMessage);
     return;
   }
-
   favorites.forEach((park) =>
     $favoritesContainer.appendChild(createParkCard(park)),
   );
@@ -157,7 +156,6 @@ function showParkDetails(park: any): void {
 
   const parkName = document.createElement('h2');
   parkName.textContent = park.fullName;
-
   const parkImage = document.createElement('img');
   parkImage.src = park.images?.[0]?.url || 'images/no-image.jpg';
   parkImage.alt = park.fullName;
