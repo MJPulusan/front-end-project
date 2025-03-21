@@ -61,12 +61,12 @@ function createParkCard(park) {
   const favoriteButton = document.createElement('button');
   favoriteButton.classList.add('favorite-toggle');
   favoriteButton.textContent = isFavorite(park.fullName)
-    ? 'Added to Favorites'
+    ? 'Remove from Favorites'
     : 'Add to Favorites';
   favoriteButton.addEventListener('click', () => {
     toggleFavorite(park);
     favoriteButton.textContent = isFavorite(park.fullName)
-      ? 'Added to Favorites'
+      ? 'Remove from Favorites'
       : 'Add to Favorites';
   });
   parkCard.appendChild(image);
@@ -104,6 +104,14 @@ function toggleFavorite(park) {
 function displayAllFavorites() {
   $favoritesContainer.innerHTML = ''; // Clear previous results
   const favorites = getFavorites();
+  if (favorites.length === 0) {
+    // Display empty message when no favorites
+    const emptyMessage = document.createElement('p');
+    emptyMessage.textContent = 'No favorites added yet.';
+    emptyMessage.classList.add('empty-message');
+    $favoritesContainer.appendChild(emptyMessage);
+    return;
+  }
   favorites.forEach((park) =>
     $favoritesContainer.appendChild(createParkCard(park)),
   );
@@ -123,12 +131,12 @@ function showParkDetails(park) {
   $buttonsContainer.classList.add('details-button-container');
   const favoriteButton = document.createElement('button');
   favoriteButton.textContent = isFavorite(park.fullName)
-    ? 'Added to Favorites'
+    ? 'Remove from Favorites'
     : 'Add to Favorites';
   favoriteButton.addEventListener('click', () => {
     toggleFavorite(park);
     favoriteButton.textContent = isFavorite(park.fullName)
-      ? 'Added to Favorites'
+      ? 'Remove from Favorites'
       : 'Add to Favorites';
   });
   const $backButton = document.createElement('button');

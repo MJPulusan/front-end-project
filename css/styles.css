@@ -290,3 +290,11 @@ button:hover {
     flex-wrap: nowrap;
   }
 }
+
+.favorites-container p {
+  color: rgb(12, 12, 12);
+  font-family: 'Julius Sans One', sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  margin-top: 7rem;
+}
